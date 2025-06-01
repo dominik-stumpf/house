@@ -218,5 +218,6 @@ func main() {
 	http.HandleFunc("/*", notFoundHandler)
 	http.HandleFunc("/", notFoundHandler)
 
+	log.Printf("service started")
 	log.Fatal(http.ListenAndServe(":8329", nil))
 }
