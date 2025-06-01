@@ -1,7 +1,8 @@
 <script lang="ts">
-	import '../app.css';
-	
-	let { children } = $props();
+  import { redirect } from "@sveltejs/kit";
+  import "../app.css";
+
+  let { children } = $props();
 </script>
 
 {@render children()}
