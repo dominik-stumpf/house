@@ -193,11 +193,13 @@ var authToken string
 var bpmChan = make(chan int)
 
 func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
 	authToken = os.Getenv("AUTH_TOKEN")
+	if authToken == "" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
+	}
 	if authToken == "" {
 		log.Panicf("failed to parse auth token %v", authToken)
 	}
@@ -216,7 +218,7 @@ func main() {
 	http.HandleFunc("/stream", streamHandler)
 	http.HandleFunc("/broadcast", broadcastHandler)
 	http.HandleFunc("/*", notFoundHandler)
-	http.HandleFunc("/", notFoundHandler)
+	http.Handle("/", http.FileServer(http.Dir("./static")))
 
 	log.Printf("service started")
 	log.Fatal(http.ListenAndServe(":8329", nil))
