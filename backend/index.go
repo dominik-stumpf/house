@@ -199,6 +199,7 @@ func init() {
 		if err != nil {
 			log.Fatal("Error loading .env file")
 		}
+		authToken = os.Getenv("AUTH_TOKEN")
 	}
 	if authToken == "" {
 		log.Panicf("failed to parse auth token %v", authToken)
@@ -221,5 +222,6 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 
 	log.Printf("service started")
-	log.Fatal(http.ListenAndServe(":8329", nil))
+	log.Print(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
