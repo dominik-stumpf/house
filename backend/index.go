@@ -222,5 +222,6 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 
 	log.Printf("service started")
+	// log.Print(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
