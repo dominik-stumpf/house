@@ -97,6 +97,6 @@
 </script>
 
 <svelte:head>
-  <title>POF</title>
+  <title>proof of life</title>
 </svelte:head>
 <output class="text-4xl font-mono">{heartState}</output>
