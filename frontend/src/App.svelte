@@ -53,7 +53,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   let heartState = 0;
-  const sourceUrl = "https://zgzg.work";
+  const sourceUrl = "https://zgzg.dev";
 
   onMount(() => {
     const eventSource = new EventSource(new URL("/stream", sourceUrl));
