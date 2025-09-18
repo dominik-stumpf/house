@@ -6,7 +6,7 @@ services:
       - AUTH_TOKEN=${AUTH_TOKEN}
     restart: always
     ports:
-      - "23022:8080"
+      - "8080"
 
   # cloudflared:
   #   image: cloudflare/cloudflared:latest
