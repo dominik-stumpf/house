@@ -223,9 +223,9 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/stream", streamHandler)
 	http.HandleFunc("/broadcast", broadcastHandler)
+	http.Handle("/pol", http.FileServer(http.Dir("./static")))
 	http.HandleFunc("/*", notFoundHandler)
 	http.HandleFunc("/", rootHandler)
-	http.Handle("/pol", http.FileServer(http.Dir("./static")))
 
 	log.Printf("service started")
 	// log.Print(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
