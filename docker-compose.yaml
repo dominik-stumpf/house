@@ -6,10 +6,7 @@ services:
       - AUTH_TOKEN=${AUTH_TOKEN}
     restart: always
     healthcheck:
-         test: 'wget -qO- http://localhost:8080 || exit 1'
-         interval: 4s
-         timeout: 2s
-         retries: 5
+      test: 'wget -qO- http://localhost:8080 || exit 1'
     ports:
       - "8080"
 
