@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
 	"io"
 	"log"
 	"net/http"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 type clientChan chan string
@@ -212,7 +213,6 @@ func httpError(w http.ResponseWriter, code int) {
 
 func notFoundHandler(w http.ResponseWriter, r *http.Request) {
 	httpError(w, http.StatusNotFound)
-	return
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
@@ -225,7 +225,7 @@ func main() {
 	http.HandleFunc("/broadcast", broadcastHandler)
 	http.Handle("/pol", http.FileServer(http.Dir("./static")))
 	http.HandleFunc("/*", notFoundHandler)
-	http.HandleFunc("/", rootHandler)
+	http.HandleFunc("/health", rootHandler)
 
 	log.Printf("service started")
 	// log.Print(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
