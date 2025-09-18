@@ -224,7 +224,6 @@ func main() {
 	http.HandleFunc("/stream", streamHandler)
 	http.HandleFunc("/broadcast", broadcastHandler)
 	http.Handle("/pol", http.FileServer(http.Dir("./static")))
-	http.HandleFunc("/*", notFoundHandler)
 	http.HandleFunc("/health", rootHandler)
 
 	log.Printf("service started")
