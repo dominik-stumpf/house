@@ -8,10 +8,10 @@ services:
     ports:
       - "8080:8080"
 
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
-    container_name: cloudflared
-    environment:
-      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
-    restart: always
+  # cloudflared:
+  #   image: cloudflare/cloudflared:latest
+  #   command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+  #   container_name: cloudflared
+  #   environment:
+  #     - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+  #   restart: always
