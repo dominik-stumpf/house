@@ -11,3 +11,4 @@ AUTH_TOKEN
 
 docker compose --env-file ~/.env up --build -d
 
+
