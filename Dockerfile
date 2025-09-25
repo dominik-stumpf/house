@@ -18,10 +18,11 @@ COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 COPY backend/ .
 COPY --from=frontend-builder /backend/spa ./spa
-RUN cat spa/index.html || exit 1
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build \
-    -ldflags='-w -s -extldflags "-static"' -a \
-    -o engine && upx -9 engine
+# RUN cat spa/index.html || exit 1
+# RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build \
+#     -ldflags='-w -s -extldflags "-static"' -a \
+#     -o engine && upx -9 engine
+RUN go build -o engine
 
 FROM gcr.io/distroless/static
 ENV APP_PORT=8080
