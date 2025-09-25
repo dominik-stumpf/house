@@ -1,21 +1,30 @@
-FROM node:22.15.0 AS frontend-build
-WORKDIR /app
+FROM node:22.15.0 AS frontend-builder
+WORKDIR /frontend
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-COPY ./frontend/package.json ./
-COPY ./frontend/pnpm-lock.yaml ./
+COPY frontend/package.json ./
+COPY frontend/pnpm-lock.yaml ./
+COPY frontend/pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
-COPY ./frontend/ ./
+COPY frontend ./
 RUN pnpm run build
 
-FROM golang:alpine AS backend-build
-WORKDIR /app
-COPY backend/ ./
-COPY --from=frontend-build /app/dist ./static/
-RUN go build -o server .
+FROM golang:1.24.3-alpine AS binary-builder
+ARG APP_NAME=backend
+RUN apk update && apk upgrade && apk --update add git upx
+WORKDIR /backend
+COPY backend/go.mod backend/go.sum ./
+RUN go mod download
+COPY backend/ .
+COPY --from=frontend-builder /backend/spa .
+RUN cat spa/index.html || exit 1
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+    -ldflags='-w -s -extldflags "-static"' -a \
+    -o engine && upx -9 engine
 
-FROM alpine
-COPY --from=backend-build /app/server ./server
-COPY --from=backend-build /app/static ./static
-CMD ["./server"]
+FROM gcr.io/distroless/static
+ENV APP_PORT=8080
+WORKDIR /app
+COPY --from=binary-builder --chown=nonroot:nonroot /backend/engine .
+ENTRYPOINT ["./engine"]

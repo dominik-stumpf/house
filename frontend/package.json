@@ -44,6 +44,7 @@
       "esbuild"
     ]
   },
+  "packageManager": "pnpm@10.17.1",
   "dependencies": {
     "auto": "^11.3.0"
   }
