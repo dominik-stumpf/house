@@ -17,9 +17,9 @@ WORKDIR /backend
 COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 COPY backend/ .
-COPY --from=frontend-builder /backend/spa .
+COPY --from=frontend-builder /backend/spa ./spa
 RUN cat spa/index.html || exit 1
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build \
     -ldflags='-w -s -extldflags "-static"' -a \
     -o engine && upx -9 engine
 
