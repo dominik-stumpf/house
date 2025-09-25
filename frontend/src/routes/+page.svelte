@@ -1,2 +1,10 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+  import Prose from "$lib/components/Prose.svelte";
+  import Landing from "$lib/components/Landing.md";
+  import Header from "$lib/components/Header.svelte";
+</script>
+
+<Prose>
+  <Header />
+  <Landing />
+</Prose>
