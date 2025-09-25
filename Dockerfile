@@ -24,7 +24,7 @@ COPY --from=frontend-builder /backend/spa ./spa
 #     -o engine && upx -9 engine
 RUN go build -o engine
 
-FROM alpine
+FROM gcr.io/distroless/static
 ENV APP_PORT=8080
 WORKDIR /app
 COPY --from=binary-builder --chown=nonroot:nonroot /backend/engine .
