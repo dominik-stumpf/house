@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
 	"io"
 	"log"
 	"net/http"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 type clientChan chan string
@@ -207,6 +208,7 @@ func init() {
 }
 
 func httpError(w http.ResponseWriter, code int) {
+	log.Printf(string(code))
 	http.Error(w, http.StatusText(code), code)
 }
 
