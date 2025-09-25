@@ -22,5 +22,5 @@ func main() {
 }
 
 func handleHealth(c *fiber.Ctx) error {
-	return c.SendString("OK")
+	return c.SendString("OK o7")
 }
