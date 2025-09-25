@@ -1,19 +1,26 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"net/http"
+	"os"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	"github.com/joho/godotenv"
 )
 
-const port = "8080"
-
 func main() {
-	http.HandleFunc("/", handleSPA)
-	log.Println("the server is listening to port", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	godotenv.Load()
+	app := fiber.New()
+	app.Get("/health", handleHealth)
+	app.Use("/", filesystem.New(filesystem.Config{
+		Root:         BuildHTTPFS(),
+		NotFoundFile: "index.html",
+	}))
+	log.Fatal(app.Listen(fmt.Sprintf(":%s", os.Getenv("APP_PORT"))))
 }
 
-func handleSPA(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.RequestURI)
-	http.FileServer(BuildHTTPFS()).ServeHTTP(w, r)
+func handleHealth(c *fiber.Ctx) error {
+	return c.SendString("OK")
 }

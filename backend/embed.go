@@ -5,7 +5,6 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
-	"os"
 )
 
 //go:embed all:spa
@@ -16,19 +15,5 @@ func BuildHTTPFS() http.FileSystem {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return HTMLFS{http.FS(build)}
-}
-
-type HTMLFS struct {
-	d http.FileSystem
-}
-
-func (d HTMLFS) Open(name string) (http.File, error) {
-	f, err := d.d.Open(name)
-	if os.IsNotExist(err) {
-		if f, err := d.d.Open(name + ".html"); err == nil {
-			return f, nil
-		}
-	}
-	return f, err
+	return http.FS(build)
 }
