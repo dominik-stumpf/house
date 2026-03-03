@@ -4,8 +4,6 @@
 	let { children }: { children: Snippet } = $props();
 </script>
 
-<article
-	class="prose prose-sm max-w-prose prose-neutral sm:prose-base lg:prose-lg dark:prose-invert"
->
+<article class="prose prose-sm prose-neutral sm:prose-base dark:prose-invert">
 	{@render children()}
 </article>
