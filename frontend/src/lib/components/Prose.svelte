@@ -1,9 +1,9 @@
 <script lang="ts">
-  let { children } = $props();
+	import type { Snippet } from "svelte";
+
+	let { children }: { children: Snippet } = $props();
 </script>
 
-<div class="mx-8">
-  <div class="mx-auto my-16 prose prose-neutral md:my-24 lg:my-28 lg:prose-lg dark:prose-invert">
-    {@render children()}
-  </div>
-</div>
+<article class="prose prose-sm prose-neutral sm:prose-base dark:prose-invert">
+	{@render children()}
+</article>

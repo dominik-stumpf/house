@@ -1,4 +1,0 @@
-onlyBuiltDependencies:
-  - esbuild
-
-useNodeVersion: 24.13.0

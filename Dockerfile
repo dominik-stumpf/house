@@ -10,7 +10,7 @@ RUN pnpm install --frozen-lockfile
 COPY frontend ./
 RUN pnpm run build
 
-FROM golang:1.24.3-alpine AS binary-builder
+FROM golang:1.25.7-alpine AS binary-builder
 ARG APP_NAME=backend
 RUN apk update && apk upgrade && apk --update add git upx
 WORKDIR /backend
@@ -18,8 +18,8 @@ COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 COPY backend/ .
 COPY --from=frontend-builder /backend/spa ./spa
-RUN cat spa/index.html || exit 1
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build \
+# RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build \
+RUN CGO_ENABLED=0 GOOS=linux go build \
     -ldflags='-w -s -extldflags "-static"' -a \
     -o engine && upx -9 engine
 
