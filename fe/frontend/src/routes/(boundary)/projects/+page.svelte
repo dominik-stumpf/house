@@ -1,19 +1,19 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import type { page } from '$app/state';
-	import Boundary from '$lib/components/Boundary.svelte';
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import Prose from '$lib/components/Prose.svelte';
-	import { config } from '$lib/config';
-	import { tz } from '$lib/tz';
-	import { trans } from '$lib/trans';
+	import { resolve } from "$app/paths";
+	import type { page } from "$app/state";
+	import Boundary from "$lib/components/Boundary.svelte";
+	import Footer from "$lib/components/Footer.svelte";
+	import Header from "$lib/components/Header.svelte";
+	import Prose from "$lib/components/Prose.svelte";
+	import { config } from "$lib/config";
+	import { tz } from "$lib/tz";
+	import { trans } from "$lib/trans";
 
 	const paths = {
-		'/projects/astral-playland': import('./astral-playland/+page.svx'),
-		'/projects/shaderkit': import('./shaderkit/+page.svx')
+		"/projects/astral-playland": import("./astral-playland/+page.svx"),
+		"/projects/shaderkit": import("./shaderkit/+page.svx"),
 	} as const satisfies Partial<
-		Record<typeof page.url.pathname, Promise<typeof import('*.svx')>>
+		Record<typeof page.url.pathname, Promise<typeof import("*.svx")>>
 	>;
 
 	const projects = await Promise.all(
@@ -21,20 +21,20 @@
 			const { metadata } = await path;
 			return {
 				path: href as keyof typeof paths,
-				metadata: trans.newProjectMetadata(metadata)
+				metadata: trans.newProjectMetadata(metadata),
 			};
-		})
+		}),
 	);
 
 	projects.sort(
 		(a, b) =>
-			b.metadata.publishedAt.valueOf() - a.metadata.publishedAt.valueOf()
+			b.metadata.publishedAt.valueOf() - a.metadata.publishedAt.valueOf(),
 	);
 
 	// TODO: finish path
 	const projectsSourceLink = new URL(
 		`house/tree/main`,
-		config.platformLinks.forgejo
+		config.platformLinks.forgejo,
 	).href;
 </script>
 

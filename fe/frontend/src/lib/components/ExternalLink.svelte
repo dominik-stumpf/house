@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { spread } from '$lib/spread';
+	import { spread } from "$lib/spread";
 	// import type { HTMLAnchorAttributes } from 'svelte/elements';
 	// const { children, ...props }: HTMLAnchorAttributes = $props();
 	export let href: string;

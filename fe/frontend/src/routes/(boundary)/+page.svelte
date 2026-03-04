@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import Boundary from '$lib/components/Boundary.svelte';
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import Prose from '$lib/components/Prose.svelte';
-	import { config } from '$lib/config';
-	import { spread } from '$lib/spread';
+	import { resolve } from "$app/paths";
+	import Boundary from "$lib/components/Boundary.svelte";
+	import Footer from "$lib/components/Footer.svelte";
+	import Header from "$lib/components/Header.svelte";
+	import Prose from "$lib/components/Prose.svelte";
+	import { config } from "$lib/config";
+	import { spread } from "$lib/spread";
 </script>
 
 <svelte:head>
-	<link rel="prefetch" href={resolve('/projects')} as="document" />
+	<link rel="prefetch" href={resolve("/projects")} as="document" />
 </svelte:head>
 
 <Header />
@@ -24,7 +24,7 @@
 				a WebGPU based shader sandbox. In my freetime I like fiddling around
 				with computer graphics and trying game development. Besides that, I
 				sometimes document my tech related
-				<a href={resolve('/projects')}>findings or experiments here</a>.
+				<a href={resolve("/projects")}>findings or experiments here</a>.
 			</p>
 			<p>
 				When making websites my ideology is <b>keeping things simple</b> and snappy

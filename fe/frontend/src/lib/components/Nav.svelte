@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
-	import { config } from '$lib/config';
+	import { resolve } from "$app/paths";
+	import { page } from "$app/state";
+	import { config } from "$lib/config";
 
 	const navlinks = [
-		{ href: config.navigation.about, name: 'about' },
-		{ href: config.navigation.projects, name: 'projects' },
-		{ href: config.navigation.resume, name: 'résumé' }
+		{ href: config.navigation.about, name: "about" },
+		{ href: config.navigation.projects, name: "projects" },
+		{ href: config.navigation.resume, name: "résumé" },
 	] as const;
 </script>
 
@@ -23,7 +23,7 @@
 			>{navlink.name}</a
 		>
 		{#if index !== navlinks.length - 1}
-			<span class="text-muted-foreground hidden select-none sm:block">:</span>
+			<span class="hidden text-muted-foreground select-none sm:block">:</span>
 		{/if}
 	{/each}
 </nav>

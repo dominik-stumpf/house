@@ -9,8 +9,8 @@ declare global {
 		// interface Platform {}
 	}
 
-	declare module '*.svx' {
-		import type { SvelteComponent } from 'svelte';
+	declare module "*.svx" {
+		import type { SvelteComponent } from "svelte";
 
 		export default class Comp extends SvelteComponent {}
 

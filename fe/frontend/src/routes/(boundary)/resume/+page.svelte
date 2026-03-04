@@ -1,13 +1,13 @@
 <script>
-	import Prose from '$lib/components/Prose.svelte';
-	import { config } from '$lib/config';
-	import { spread } from '$lib/spread';
-	import Header from '$lib/components/Header.svelte';
-	import Boundary from '$lib/components/Boundary.svelte';
+	import Prose from "$lib/components/Prose.svelte";
+	import { config } from "$lib/config";
+	import { spread } from "$lib/spread";
+	import Header from "$lib/components/Header.svelte";
+	import Boundary from "$lib/components/Boundary.svelte";
 
 	const contactLinks = [
-		{ name: 'Email', href: config.platformLinks.email },
-		...config.platformNavigation
+		{ name: "Email", href: config.platformLinks.email },
+		...config.platformNavigation,
 	];
 </script>
 

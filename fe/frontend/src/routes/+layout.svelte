@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { config } from '$lib/config';
-	import './layout.css';
+	import { config } from "$lib/config";
+	import "./layout.css";
 
 	let { children } = $props();
 </script>

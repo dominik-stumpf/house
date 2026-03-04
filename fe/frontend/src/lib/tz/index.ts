@@ -1,15 +1,15 @@
-import { derived, readable } from 'svelte/store';
+import { derived, readable } from "svelte/store";
 
 const updateFrequencyMs = 1000;
 
 // source: https://stackoverflow.com/a/74377652
 function getTimeZoneOffsetHour(date: Date, timeZone: string) {
-	const referenceLocale = 'en-US';
+	const referenceLocale = "en-US";
 	const localizedTime = new Date(
-		date.toLocaleString(referenceLocale, { timeZone })
+		date.toLocaleString(referenceLocale, { timeZone }),
 	);
 	const utcTime = new Date(
-		date.toLocaleString(referenceLocale, { timeZone: 'UTC' })
+		date.toLocaleString(referenceLocale, { timeZone: "UTC" }),
 	);
 	return Math.round((localizedTime.getTime() - utcTime.getTime()) / 60000) / 60;
 }
@@ -48,7 +48,7 @@ interface TimeZoneOffsetMeasurement {
 function measureTimeZoneOffset({
 	time,
 	targetTimeZone,
-	localTimeZone
+	localTimeZone,
 }: {
 	time: Date;
 	targetTimeZone: string;
@@ -58,7 +58,7 @@ function measureTimeZoneOffset({
 	const localOffset = getTimeZoneOffsetHour(time, localTimeZone);
 	const timeZoneOffsetHour = targetOffset - localOffset;
 	const targetTime = time.toLocaleTimeString(undefined, {
-		timeZone: targetTimeZone
+		timeZone: targetTimeZone,
 	});
 
 	return { timeZoneOffsetHour, targetTime };
@@ -70,21 +70,21 @@ function measureTimeZoneOffset({
 function getTimeZoneOffset(targetTimeZone: string) {
 	const { time, localTimeZone } = getTimeZoneOffsetRequisites();
 	const timeZoneOffsetMeasurement = derived(time, ($time) =>
-		measureTimeZoneOffset({ time: $time, targetTimeZone, localTimeZone })
+		measureTimeZoneOffset({ time: $time, targetTimeZone, localTimeZone }),
 	);
 
 	return {
 		offsetMeasurement: timeZoneOffsetMeasurement,
 		targetTimeZone,
 		localTimeZone,
-		time
+		time,
 	};
 }
 
 const offsetState = {
-	SameTimeZone: 'SameTimeZone',
-	Ahead: 'Ahead',
-	Behind: 'Behind'
+	SameTimeZone: "SameTimeZone",
+	Ahead: "Ahead",
+	Behind: "Behind",
 } as const;
 
 type OffsetState = keyof typeof offsetState;
@@ -100,10 +100,10 @@ function determineTimeZoneOffsetState(timeZoneOffsetHour: number): OffsetState {
 // TODO: possibly move to trans
 function formatPrettyDate(date: Date) {
 	// extra Date wrapper is for client and server side compatibility
-	return new Date(date).toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric'
+	return new Date(date).toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
 	});
 }
 
@@ -111,5 +111,5 @@ export const tz = {
 	getTimeZoneOffset,
 	determineTimeZoneOffsetState,
 	offsetState,
-	formatPrettyDate
+	formatPrettyDate,
 };

@@ -1,22 +1,22 @@
 <script lang="ts" module>
-	import ExternalLink from '$lib/components/ExternalLink.svelte';
+	import ExternalLink from "$lib/components/ExternalLink.svelte";
 	const a = ExternalLink;
 	export { a };
 </script>
 
 <script lang="ts">
-	import Boundary from '$lib/components/Boundary.svelte';
-	import Footer from '$lib/components/Footer.svelte';
-	import Header from '$lib/components/Header.svelte';
-	import Prose from '$lib/components/Prose.svelte';
-	import type { Snippet } from 'svelte';
-	import { trans } from '$lib/trans';
+	import Boundary from "$lib/components/Boundary.svelte";
+	import Footer from "$lib/components/Footer.svelte";
+	import Header from "$lib/components/Header.svelte";
+	import Prose from "$lib/components/Prose.svelte";
+	import type { Snippet } from "svelte";
+	import { trans } from "$lib/trans";
 
 	export type ProjectMetadata = {
 		title: string;
 		lead: string;
 		publishedAt: Date;
-		layout: 'project';
+		layout: "project";
 	};
 
 	let {
@@ -24,7 +24,7 @@
 		title,
 		lead,
 		publishedAt,
-		layout
+		layout,
 	}: { children: Snippet } & ProjectMetadata = $props();
 
 	// svelte-ignore state_referenced_locally
@@ -32,7 +32,7 @@
 		title,
 		lead,
 		publishedAt,
-		layout
+		layout,
 	} satisfies ProjectMetadata);
 </script>
 

@@ -1,23 +1,23 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import { config } from '$lib/config';
-	import { tz } from '$lib/tz';
-	import Boundary from './Boundary.svelte';
-	import { spread } from '$lib/spread';
+	import { browser } from "$app/environment";
+	import { config } from "$lib/config";
+	import { tz } from "$lib/tz";
+	import Boundary from "./Boundary.svelte";
+	import { spread } from "$lib/spread";
 
 	let offset = $state(tz.getTimeZoneOffset(config.targetTimeZone));
 	const offsetMeasurement = $derived(offset.offsetMeasurement);
 	const time = $derived(offset.time);
 	const offsetHour = $derived(Math.abs($offsetMeasurement.timeZoneOffsetHour));
 	const offsetState = $derived(
-		tz.determineTimeZoneOffsetState($offsetMeasurement.timeZoneOffsetHour)
+		tz.determineTimeZoneOffsetState($offsetMeasurement.timeZoneOffsetHour),
 	);
 	const offsetMessageMap = $derived(
 		new Map([
-			[tz.offsetState.SameTimeZone, 'same time zone'],
+			[tz.offsetState.SameTimeZone, "same time zone"],
 			[tz.offsetState.Behind, `${offsetHour}h behind`],
-			[tz.offsetState.Ahead, `${offsetHour}h ahead`]
-		])
+			[tz.offsetState.Ahead, `${offsetHour}h ahead`],
+		]),
 	);
 </script>
 
