@@ -96,6 +96,11 @@
 	em {
 		font-family: var(--font-serif);
 	}
+	*[title] {
+		cursor: help;
+		text-decoration: underline dotted var(--color-muted-foreground);
+		text-underline-offset: 4px;
+	}
 }
 
 @theme {
@@ -108,6 +113,7 @@
 	--color-muted: light-dark(#444444, #dddddd);
 	--color-muted-foreground: light-dark(#666666, #cccccc);
 	--color-primary: gray;
+	--color-border: light-dark(#cccccc, #666666);
 }
 
 @plugin '@tailwindcss/forms' {

@@ -22,8 +22,10 @@ const targetTimeZone = 'Europe/Budapest';
 
 const platformLinks = {
 	github: 'https://github.com/dominik-stumpf',
+	forgejo: `https://git.${domain}`,
 	aocRepo: 'https://github.com/dominik-stumpf/advent-of-code',
 	linkedin: 'https://linkedin.com/in/dominik-stumpf',
+	astralPlayland: 'https://astral-playland.vercel.app',
 	email: `mailto:${site.maintainerEmail}`
 } as const;
 

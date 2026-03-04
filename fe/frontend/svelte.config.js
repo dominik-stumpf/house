@@ -1,8 +1,12 @@
 import { mdsvex } from 'mdsvex';
 import adapter from '@sveltejs/adapter-static';
+import { join } from 'node:path';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+	compilerOptions: {
+		experimental: { async: true }
+	},
 	kit: {
 		adapter: adapter({
 			// default options are shown. On some platforms
@@ -14,7 +18,16 @@ const config = {
 			strict: true
 		})
 	},
-	preprocess: [mdsvex()],
+	preprocess: [
+		mdsvex({
+			layout: {
+				project: join(
+					import.meta.dirname,
+					'./src/lib/components/ProjectLayout.svelte'
+				)
+			}
+		})
+	],
 	extensions: ['.svelte', '.svx']
 };
 

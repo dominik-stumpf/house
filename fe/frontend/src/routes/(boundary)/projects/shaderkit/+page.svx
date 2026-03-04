@@ -1,0 +1,18 @@
+---
+title: Shaderkit
+lead: WebGPU based shader sandbox.
+publishedAt: 2026-03-04
+layout: project
+---
+
+### About title...
+
+> raw svelte content
+
+```ts
+console.log("about")
+```
+
+<div class="text-red-500">
+    {Math.random()}
+</div>

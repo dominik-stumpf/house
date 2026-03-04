@@ -1,0 +1,14 @@
+---
+title: Astral playland
+lead: Planet scene made with threejs.
+publishedAt: 2024-04-04
+layout: project
+---
+
+<script lang="ts">
+    import { config } from "$lib/config"
+</script>
+
+<iframe src={config.platformLinks.astralPlayland} title={lead} class="w-full h-96"></iframe>
+
+[View in full size]({config.platformLinks.astralPlayland})
