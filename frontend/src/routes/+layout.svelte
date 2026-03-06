@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { asset } from "$app/paths";
 	import { config } from "$lib/config";
+	import favicon from "$lib/assets/favicon.svg";
 	import "./layout.css";
 
 	let { children } = $props();
@@ -42,7 +43,7 @@
 		crossorigin=""
 		type="font/woff2"
 	/>
-	<link rel="icon" href={asset("/media/favicon.svg")} type="image/svg+xml" />
+	<link rel="icon" href={favicon} type="image/svg+xml" />
 
 	<meta name="description" content={config.site.description} />
 	<meta property="og:url" content={config.site.link} />
