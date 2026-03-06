@@ -56,12 +56,7 @@ func RemoveTrailingSlash(c fiber.Ctx) error {
 }
 
 func HtmlNotFound(c fiber.Ctx) error {
-	file, err := RoutesFS.Open("404.html")
-	if err != nil {
-		return err
-	}
-	c.RequestCtx().SetContentType("text/html")
-	return c.SendStream(file)
+	return c.SendFile("404.html", fiber.SendFile{FS: RoutesFS, Compress: true})
 }
 
 func RemoveLastModified(c fiber.Ctx) error {
