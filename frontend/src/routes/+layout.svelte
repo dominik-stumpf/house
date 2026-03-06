@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from "$app/paths";
 	import { config } from "$lib/config";
 	import "./layout.css";
 
@@ -6,6 +7,43 @@
 </script>
 
 <svelte:head>
+	<link
+		rel="preload"
+		href={asset("/font/roboto_5.2.6_latin-wght-normal.woff2")}
+		as="font"
+		crossorigin=""
+		type="font/woff2"
+	/>
+	<link
+		rel="preload"
+		href={asset("/font/roboto_5.2.9_latin-wght-italic.woff2")}
+		as="font"
+		crossorigin=""
+		type="font/woff2"
+	/>
+	<link
+		rel="preload"
+		href={asset("/font/jetbrains-mono_5.0.19_latin-wght-normal.woff2")}
+		as="font"
+		crossorigin=""
+		type="font/woff2"
+	/>
+	<link
+		rel="preload"
+		href={asset("/font/roboto-serif_5.2.8_latin-full-normal.woff2")}
+		as="font"
+		crossorigin=""
+		type="font/woff2"
+	/>
+	<link
+		rel="preload"
+		href={asset("/font/roboto-serif_5.2.8_latin-full-italic.woff2")}
+		as="font"
+		crossorigin=""
+		type="font/woff2"
+	/>
+	<link rel="icon" href={asset("/media/favicon.svg")} type="image/svg+xml" />
+
 	<meta name="description" content={config.site.description} />
 	<meta property="og:url" content={config.site.link} />
 	<meta property="og:type" content="website" />

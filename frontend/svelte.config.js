@@ -40,11 +40,16 @@ const config = {
 		experimental: { async: true },
 	},
 	kit: {
+		paths: {
+			// base: "/assets",
+			// relative: false,
+		},
 		adapter: adapter({
 			// default options are shown. On some platforms
 			// these options are set automatically — see below
-			pages: "../backend/spa",
-			fallback: undefined,
+			pages: "../backend/spa_routes",
+			assets: "../backend/spa_assets",
+			// fallback: "404.html",
 			precompress: true,
 			strict: true,
 		}),
