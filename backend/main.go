@@ -49,7 +49,7 @@ func RemoveTrailingSlash(c fiber.Ctx) error {
 		newPath := strings.TrimSuffix(path, "/")
 		uri := c.Request().URI()
 		uri.SetPath(newPath)
-		return c.Redirect().Status(fiber.StatusPermanentRedirect).To(uri.String())
+		return c.Redirect().Status(fiber.StatusPermanentRedirect).To(string(uri.RequestURI()))
 	}
 
 	return c.Next()
