@@ -42,7 +42,7 @@ const config = {
 	kit: {
 		paths: {
 			// base: "/assets",
-			// relative: false,
+			relative: false,
 		},
 		adapter: adapter({
 			// default options are shown. On some platforms
@@ -50,7 +50,7 @@ const config = {
 			pages: "../backend/spa_routes",
 			assets: "../backend/spa_assets",
 			// fallback: "404.html",
-			precompress: true,
+			// precompress: true,
 			strict: true,
 		}),
 	},

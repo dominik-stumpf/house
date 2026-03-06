@@ -21,7 +21,12 @@ func ResolveNoHTMLExtension(c fiber.Ctx) error {
 	extension := filepath.Ext(string(uri.LastPathSegment()))
 	isRoot := slices.Equal(path, []byte("/"))
 
-	if extension == "" && !isRoot{
+	if isRoot {
+		uri.SetPath("/index.html")
+		return c.Next()
+	}
+
+	if extension == "" {
 		filename := uri.LastPathSegment()
 		resolved := append(filename, []byte(".html")...)
 		path = bytes.TrimRight(path, "/")
@@ -37,39 +42,53 @@ func ResolveNoHTMLExtension(c fiber.Ctx) error {
 	return c.Next()
 }
 
-func RemoveTrailingSlash() fiber.Handler {
-	return func(c fiber.Ctx) error {
-		path := c.Path()
+func RemoveTrailingSlash(c fiber.Ctx) error {
+	path := c.Path()
 
-		if path != "/" && strings.HasSuffix(path, "/") {
-			newPath := strings.TrimSuffix(path, "/")
-			uri := c.Request().URI()
-			uri.SetPath(newPath)
-			return c.Redirect().Status(fiber.StatusPermanentRedirect).To(uri.String())
-		}
-
-		return c.Next()
+	if path != "/" && strings.HasSuffix(path, "/") {
+		newPath := strings.TrimSuffix(path, "/")
+		uri := c.Request().URI()
+		uri.SetPath(newPath)
+		return c.Redirect().Status(fiber.StatusPermanentRedirect).To(uri.String())
 	}
+
+	return c.Next()
+}
+
+func HtmlNotFound(c fiber.Ctx) error {
+	file, err := RoutesFS.Open("404.html")
+	if err != nil {
+		return err
+	}
+	c.RequestCtx().SetContentType("text/html")
+	return c.SendStream(file)
+}
+
+func RemoveLastModified(c fiber.Ctx) error {
+	err := c.Next()
+	if err != nil {
+		return err
+	}
+	c.Response().Header.Del("last-modified")
+	return nil
 }
 
 func main() {
 	godotenv.Load()
 	app := fiber.New()
-	app.Use(RemoveTrailingSlash())
-	app.Get("/health", handleHealth)
-	app.Get("*", static.New("", static.Config{
-	    FS:     AssetFS,
-		IndexNames: []string{},
-		MaxAge: 31536000, // 1 year
-	}))
+	app.Use(RemoveTrailingSlash, RemoveLastModified)
 	app.Get("*", ResolveNoHTMLExtension, static.New("", static.Config{
 	    FS:     RoutesFS,
 		MaxAge: 0,
+		Compress: true,
+		IndexNames: []string{},
 	}))
-
+	app.Get("*", static.New("", static.Config{
+	    FS:     AssetFS,
+		IndexNames: []string{},
+		Compress: true,
+		MaxAge: 31536000, // 1 year
+		NotFoundHandler: HtmlNotFound,
+	}))
 	log.Fatal(app.Listen(fmt.Sprintf(":%s", os.Getenv("APP_PORT"))))
-}
-
-func handleHealth(c fiber.Ctx) error {
-	return c.SendString("OK o7")
 }
