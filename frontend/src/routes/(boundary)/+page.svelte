@@ -32,10 +32,6 @@
 				Go and Svelte while also appreciating the more established ones such as PostgreSQL
 				and Unix.
 			</p>
-			<small>
-				I currently disencourage and consider the use of LLM for production
-				software development a net negative.
-			</small>
 		</Prose>
 	</Boundary>
 </main>
