@@ -17,11 +17,10 @@ WORKDIR /backend
 COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 COPY backend/ .
-COPY --from=frontend-builder /backend/spa* ./
+COPY --from=frontend-builder /backend/spa_routes ./spa_routes
+COPY --from=frontend-builder /backend/spa_assets ./spa_assets
 # RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build \
-RUN CGO_ENABLED=0 GOOS=linux go build \
-    -ldflags='-w -s -extldflags "-static"' -a \
-    -o engine && upx -9 engine
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags='-w -s -extldflags "-static"' -a -o engine && upx -9 engine
 
 FROM gcr.io/distroless/static
 ENV APP_PORT=8080
