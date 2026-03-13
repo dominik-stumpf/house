@@ -26,6 +26,7 @@ const platformLinks = {
 	aocRepo: "https://github.com/dominik-stumpf/advent-of-code",
 	linkedin: "https://linkedin.com/in/dominik-stumpf",
 	astralPlayland: "https://astral-playland.vercel.app",
+	shaderkit: `https://shaderkit.${domain}`,
 	email: `mailto:${site.maintainerEmail}`,
 } as const;
 
