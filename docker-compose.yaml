@@ -5,8 +5,6 @@ services:
     environment:
       - AUTH_TOKEN=${AUTH_TOKEN}
     restart: always
-    healthcheck:
-      test: "wget -qO- http://localhost:8080/health || exit 1"
     ports:
       - "8080:8080"
 

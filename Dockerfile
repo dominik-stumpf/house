@@ -19,11 +19,13 @@ RUN go mod download
 COPY backend/ .
 COPY --from=frontend-builder /backend/spa_routes ./spa_routes
 COPY --from=frontend-builder /backend/spa_assets ./spa_assets
-# RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build \
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags='-w -s -extldflags "-static"' -a -o engine && upx -9 engine
+RUN CGO_ENABLED=0 go build -ldflags='-w -s -extldflags "-static"' -a -o engine && upx -9 engine
+RUN CGO_ENABLED=0 go build -ldflags='-w -s -extldflags "-static"' -a -o hc ./healthcheck && upx -9 hc
 
 FROM gcr.io/distroless/static
 ENV APP_PORT=8080
 WORKDIR /app
 COPY --from=binary-builder --chown=nonroot:nonroot /backend/engine .
+COPY --from=binary-builder --chown=nonroot:nonroot /backend/hc .
 ENTRYPOINT ["./engine"]
+HEALTHCHECK CMD ["./hc"]
