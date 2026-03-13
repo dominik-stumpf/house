@@ -9,6 +9,4 @@ layout: project
     import { config } from "$lib/config"
 </script>
 
-<iframe src={config.platformLinks.shaderkit} title={lead} class="w-full h-96"></iframe>
-
 [View in full size]({config.platformLinks.shaderkit})
