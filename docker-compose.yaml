@@ -2,8 +2,8 @@ services:
   go_app:
     build: .
     container_name: go_app
-    environment:
-      - AUTH_TOKEN=${AUTH_TOKEN}
+    # environment:
+    #   - AUTH_TOKEN=${AUTH_TOKEN}
     restart: always
     ports:
       - "8080:8080"
