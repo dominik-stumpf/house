@@ -1,6 +1,6 @@
 const playerTilePos = { x: 2, y: 3 } as const;
 
-const world = {
+let world = {
 	tileSize: 50,
 	dimensions: { x: 500, y: 500 },
 	grid: [
@@ -16,26 +16,29 @@ const world = {
 		createWall(5, 7),
 		createWall(7, 7),
 	],
-} as const;
-
-const player = {
-	pos: {
-		x: world.tileSize * playerTilePos.x,
-		y: world.tileSize * playerTilePos.y,
-	},
-	vel: {
-		x: 0,
-		y: 0,
-	},
-	speed: 5,
-	colliderRadius: world.tileSize * 0.49,
-	get center() {
-		return {
-			x: player.pos.x + world.tileSize / 2,
-			y: player.pos.y + world.tileSize / 2,
-		};
-	},
 };
+
+let player = createPlayer();
+function createPlayer() {
+	return {
+		pos: {
+			x: world.tileSize * playerTilePos.x,
+			y: world.tileSize * playerTilePos.y,
+		},
+		vel: {
+			x: 0,
+			y: 0,
+		},
+		speed: world.tileSize / 10,
+		colliderRadius: world.tileSize * 0.49,
+		get center() {
+			return {
+				x: player.pos.x + world.tileSize / 2,
+				y: player.pos.y + world.tileSize / 2,
+			};
+		},
+	};
+}
 
 const movementIntent = { x: 0, y: 0 };
 
@@ -242,11 +245,21 @@ class CollisionSystem {
 }
 // == collisionsystem
 
-const collision = new CollisionSystem(
-	world.grid.filter((cell) => cell.type === "Wall"),
-	world.tileSize,
-	world.dimensions,
-);
+let collision = createCollisionSystem();
+
+function createCollisionSystem() {
+	return new CollisionSystem(
+		world.grid.filter((cell) => cell.type === "Wall"),
+		world.tileSize,
+		world.dimensions,
+	);
+}
+
+function resizeWorld(newValues: Pick<typeof world, "dimensions" | "tileSize">) {
+	world = { ...world, ...newValues };
+	player = createPlayer();
+	collision = createCollisionSystem();
+}
 
 function drawFrame(c: CanvasRenderingContext2D) {
 	const length = vec2.lengthSqrt(movementIntent) || 1;
@@ -261,4 +274,4 @@ function drawFrame(c: CanvasRenderingContext2D) {
 	drawWorld(c);
 }
 
-export const tdcoll = { drawFrame, registerIntentByKeypress };
+export const tdcoll = { drawFrame, registerIntentByKeypress, resizeWorld };

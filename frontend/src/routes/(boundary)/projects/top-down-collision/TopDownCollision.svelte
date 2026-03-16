@@ -11,20 +11,26 @@
 	}
 
 	onMount(() => {
+		canvas.width = canvas.clientWidth * devicePixelRatio;
+		canvas.height = canvas.clientWidth * devicePixelRatio;
+
+		tdcoll.resizeWorld({
+			dimensions: { x: canvas.width, y: canvas.height },
+			tileSize: canvas.width / 10,
+		});
 		tdcoll.registerIntentByKeypress();
 		const nullableCtx = canvas.getContext("2d");
 		if (!nullableCtx) {
 			throw Error("failed to get canvas context");
 		}
 		c = nullableCtx;
-		c.lineWidth = 10;
 		animate();
 	});
 </script>
 
 <div>do canvas viewer</div>
 
-<canvas bind:this={canvas} width="500" height="500" class="border"></canvas>
+<canvas bind:this={canvas} class="size-full border"></canvas>
 
 <style>
 	canvas {
