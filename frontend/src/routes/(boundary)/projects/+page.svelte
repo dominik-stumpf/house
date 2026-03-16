@@ -8,6 +8,7 @@
 	import { config } from "$lib/config";
 	import { tz } from "$lib/tz";
 	import { trans } from "$lib/trans";
+	import { spread } from "$lib/spread";
 
 	const paths = {
 		"/projects/astral-playland": import("./astral-playland/+page.svx"),
@@ -31,14 +32,9 @@
 		(a, b) =>
 			b.metadata.publishedAt.valueOf() - a.metadata.publishedAt.valueOf(),
 	);
-
-	// TODO: finish path
-	const projectsSourceLink = new URL(
-		`house/tree/main`,
-		config.platformLinks.forgejo,
-	).href;
 </script>
 
+<!-- eslint-disable svelte/no-navigation-without-resolve -->
 <svelte:head>
 	<title>Projects</title>
 </svelte:head>
@@ -103,10 +99,20 @@
 			<!-- <h2>Guides</h2> -->
 		</main>
 		<blockquote>
-			Note: All entries, assets are version controlled. To see version history,
-			refer to the
-			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-			<a href={projectsSourceLink}> page's repository.</a>
+			All entries, assets are version controlled. To see version history, refer
+			to the
+			<a
+				href={`${config.platformLinks.forgejo}/house`}
+				{...spread.externalLink()}
+			>
+				page's repository.</a
+			>
+			Also note that the projects currently live on
+			<a href={config.platformLinks.github}>GitHub</a>, however I'm in the
+			process of moving them to
+			<a href={`${config.platformLinks.forgejo}`} {...spread.externalLink()}>
+				a self-hosted forgejo instance.
+			</a>
 		</blockquote>
 	</Prose>
 </Boundary>
