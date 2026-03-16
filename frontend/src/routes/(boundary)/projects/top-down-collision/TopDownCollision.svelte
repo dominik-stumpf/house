@@ -28,9 +28,10 @@
 	});
 </script>
 
-<div>do canvas viewer</div>
-
-<canvas bind:this={canvas} class="size-full border"></canvas>
+<figure>
+	<canvas bind:this={canvas} class="size-full border"></canvas>
+	<figcaption><code>WASD</code> to move</figcaption>
+</figure>
 
 <style>
 	canvas {

@@ -1,6 +1,6 @@
 ---
-title: TDC
-lead:
+title: Top down collision system
+lead: Bare implementation of 2D top down collision using tilemap and circle collider.
 publishedAt: 2026-03-14
 layout: project
 ---
@@ -10,3 +10,178 @@ layout: project
 </script>
 
 <TopDownCollision/>
+
+Used Vec2 helpers for reference.
+
+```ts
+type Vec2 = { x: number; y: number };
+
+const vec2 = {
+	convertToKey(v: Vec2) {
+		return `${v.x}-${v.y}`;
+	},
+	length(v: Vec2) {
+		return v.x ** 2 + v.y ** 2;
+	},
+	distance(v1: Vec2, v2: Vec2) {
+		return Math.sqrt((v1.x - v2.x) ** 2 + (v1.y - v2.y) ** 2);
+	},
+	lengthSqrt(v: Vec2) {
+		return Math.sqrt(vec2.length(v));
+	},
+} as const;
+```
+
+The values are fine tuned for tile size of 50 pixels, and a speed of 0.1 tile per
+tick.
+
+```ts
+class CollisionSystem {
+	private readonly obstacles: Map<string, Vec2>;
+	private readonly tileSize: number;
+	private readonly boundaryDimensions: Vec2;
+	readonly negligibleDelta = 0.001;
+
+	constructor(obstacles: Vec2[], tileSize: number, boundaryDimensions: Vec2) {
+		this.obstacles = new Map(
+			obstacles.map((cell) => [vec2.convertToKey(cell), cell]),
+		);
+		this.tileSize = tileSize;
+		this.boundaryDimensions = boundaryDimensions;
+	}
+
+	isCircleIntersectingCell(center: Vec2, radius: number, gridPos: Vec2) {
+		const minPos = {
+			x: gridPos.x * this.tileSize,
+			y: gridPos.y * this.tileSize,
+		};
+		const maxPos = {
+			x: minPos.x + this.tileSize,
+			y: minPos.y + this.tileSize,
+		};
+		const closestEdge = {
+			x: Math.min(Math.max(center.x, minPos.x), maxPos.x),
+			y: Math.min(Math.max(center.y, minPos.y), maxPos.y),
+		};
+
+		return vec2.distance(closestEdge, center) <= radius ** 2;
+	}
+
+	isCircleWithinBounds(center: Vec2, radius: number) {
+		return (
+			center.x - radius >= 0 &&
+			center.x + radius <= this.boundaryDimensions.x &&
+			center.y - radius >= 0 &&
+			center.y + radius <= this.boundaryDimensions.y
+		);
+	}
+
+	isCircleColliding(center: Vec2, radius: number) {
+		if (!this.isCircleWithinBounds(center, radius)) {
+			return true;
+		}
+		const gridMin = {
+			x: Math.floor((center.x - radius) / this.tileSize),
+			y: Math.floor((center.y - radius) / this.tileSize),
+		};
+		const gridMax = {
+			x: Math.floor((center.x + radius) / this.tileSize),
+			y: Math.floor((center.y + radius) / this.tileSize),
+		};
+		for (let gridY = gridMin.y; gridY <= gridMax.y; gridY++) {
+			for (let gridX = gridMin.x; gridX <= gridMax.x; gridX++) {
+				const gridPos = { x: gridX, y: gridY };
+				const cell = this.obstacles.get(vec2.convertToKey(gridPos));
+				if (cell && this.isCircleIntersectingCell(center, radius, gridPos)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+}
+```
+
+`isCircleIntersectingCell` accounts for a square collider, so the edges
+are accounted into the collision by comparing with `radius ** 2`.
+
+```ts
+class CollisionSystem {
+	/** Find the first position between `start` and `end` where the circle would collide */
+	findValidPos(start: Vec2, end: Vec2, radius: number) {
+		const delta = { x: end.x - start.x, y: end.y - start.y };
+		if (vec2.length(delta) < this.negligibleDelta) {
+			return start;
+		}
+
+		const maxStep = this.tileSize * 0.15;
+		const steps = Math.max(Math.ceil(vec2.length(delta) / maxStep), 1);
+		const step = { x: delta.x / steps, y: delta.y / steps };
+		let validPos = start;
+		for (let i = 0; i < steps; i++) {
+			const stepPos = { x: validPos.x + step.x, y: validPos.y + step.y };
+			if (!this.isCircleColliding(stepPos, radius)) {
+				validPos = stepPos;
+			} else {
+				const slideX = { x: stepPos.x, y: validPos.y };
+				if (!this.isCircleColliding(slideX, radius)) {
+					validPos = slideX;
+					continue;
+				}
+				const slideY = { x: validPos.x, y: stepPos.y };
+				if (!this.isCircleColliding(slideY, radius)) {
+					validPos = slideY;
+					continue;
+				}
+				break;
+			}
+		}
+		return validPos;
+	}
+}
+```
+
+`findValidPos` prevents colliders from clipping through walls if it's thinner than the speed (tile per tick).
+
+Example of using the class for restricting velocity on an entity.
+
+```ts
+class CollisionSystem {
+	applyCollision(collider: {
+		vel: Vec2;
+		center: Vec2;
+		colliderRadius: number;
+	}) {
+		if (collider.vel.x === 0 && collider.vel.y === 0) {
+			return;
+		}
+
+		const desiredPos = {
+			x: collider.center.x + collider.vel.x,
+			y: collider.center.y + collider.vel.y,
+		};
+
+		const validPos = this.findValidPos(
+			collider.center,
+			desiredPos,
+			collider.colliderRadius,
+		);
+
+		const affectedVel = {
+			x: validPos.x - collider.center.x,
+			y: validPos.y - collider.center.y,
+		};
+
+		const displacement = vec2.length({
+			x: affectedVel.x - collider.vel.y,
+			y: affectedVel.y - collider.vel.y,
+		});
+
+		if (displacement > this.negligibleDelta || displacement === 0) {
+			collider.vel = affectedVel;
+		}
+	}
+}
+```

@@ -29,7 +29,7 @@ function createPlayer() {
 			x: 0,
 			y: 0,
 		},
-		speed: world.tileSize / 10,
+		speed: world.tileSize * 0.1,
 		colliderRadius: world.tileSize * 0.49,
 		get center() {
 			return {
@@ -126,7 +126,7 @@ class CollisionSystem {
 		this.boundaryDimensions = boundaryDimensions;
 	}
 
-	isCircleIntersectsCell(center: Vec2, radius: number, gridPos: Vec2) {
+	isCircleIntersectingCell(center: Vec2, radius: number, gridPos: Vec2) {
 		const minPos = {
 			x: gridPos.x * this.tileSize,
 			y: gridPos.y * this.tileSize,
@@ -168,7 +168,7 @@ class CollisionSystem {
 			for (let gridX = gridMin.x; gridX <= gridMax.x; gridX++) {
 				const gridPos = { x: gridX, y: gridY };
 				const cell = this.obstacles.get(vec2.convertToKey(gridPos));
-				if (cell && this.isCircleIntersectsCell(center, radius, gridPos)) {
+				if (cell && this.isCircleIntersectingCell(center, radius, gridPos)) {
 					return true;
 				}
 			}
@@ -177,6 +177,7 @@ class CollisionSystem {
 		return false;
 	}
 
+	/** Find the first position between `start` and `end` where the circle would collide */
 	findValidPos(start: Vec2, end: Vec2, radius: number) {
 		const delta = { x: end.x - start.x, y: end.y - start.y };
 		if (vec2.length(delta) < this.negligibleDelta) {

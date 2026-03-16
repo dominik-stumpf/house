@@ -104,6 +104,14 @@
 
 	.shiki {
 		border: 1px solid var(--color-border);
+		tab-size: 2;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		video,
+		img {
+			filter: brightness(0.8) contrast(1.2);
+		}
 	}
 }
 
@@ -114,12 +122,59 @@
 	--color-foreground: light-dark(#000000, #ffffff);
 	--color-background: light-dark(#ffffff, #000000);
 	--color-danger-foreground: light-dark(crimson, crimson);
-	--color-muted: light-dark(#444444, #dddddd);
+	--color-muted: light-dark(#eeeeee, #333333);
 	--color-muted-foreground: light-dark(#666666, #cccccc);
 	--color-primary: gray;
 	--color-border: light-dark(#cccccc, #666666);
+	/*--radius: 0.5rem;*/
 }
 
 @plugin "@tailwindcss/forms" {
 	strategy: "base";
+}
+
+@layer utilities {
+	.prose {
+		code::before {
+			content: "";
+		}
+		code::after {
+			content: "";
+		}
+		:not(pre) code {
+			background-color: var(--color-muted);
+			color: var(--color-muted-foreground);
+			padding-left: 4px;
+			padding-right: 4px;
+			border-radius: var(--radius-xs);
+			font-weight: 400;
+			white-space: nowrap;
+		}
+		img {
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+			width: 100%;
+		}
+		img[tabindex="0"] {
+			cursor: zoom-in;
+		}
+		img:focus-visible,
+		img:active {
+			cursor: none;
+			transform: scale(2);
+			position: relative;
+			z-index: 1;
+		}
+		video {
+			width: 100%;
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+		}
+		p {
+			text-wrap: pretty;
+		}
+		figcaption {
+			text-align: center;
+		}
+	}
 }
