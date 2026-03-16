@@ -204,6 +204,41 @@ class CollisionSystem {
 		}
 		return validPos;
 	}
+
+	applyCollision(collider: {
+		vel: Vec2;
+		center: Vec2;
+		colliderRadius: number;
+	}) {
+		if (collider.vel.x === 0 && collider.vel.y === 0) {
+			return;
+		}
+
+		const desiredPos = {
+			x: collider.center.x + collider.vel.x,
+			y: collider.center.y + collider.vel.y,
+		};
+
+		const validPos = this.findValidPos(
+			collider.center,
+			desiredPos,
+			collider.colliderRadius,
+		);
+
+		const affectedVel = {
+			x: validPos.x - collider.center.x,
+			y: validPos.y - collider.center.y,
+		};
+
+		const displacement = vec2.length({
+			x: affectedVel.x - collider.vel.y,
+			y: affectedVel.y - collider.vel.y,
+		});
+
+		if (displacement > this.negligibleDelta || displacement === 0) {
+			collider.vel = affectedVel;
+		}
+	}
 }
 // == collisionsystem
 
@@ -213,43 +248,12 @@ const collision = new CollisionSystem(
 	world.dimensions,
 );
 
-function applyCollisionToPlayer() {
-	if (player.vel.x === 0 && player.vel.y === 0) {
-		return;
-	}
-
-	const desiredPos = {
-		x: player.center.x + player.vel.x,
-		y: player.center.y + player.vel.y,
-	};
-
-	const validPos = collision.findValidPos(
-		player.center,
-		desiredPos,
-		player.colliderRadius,
-	);
-
-	const affectedVel = {
-		x: validPos.x - player.center.x,
-		y: validPos.y - player.center.y,
-	};
-
-	const displacement = vec2.length({
-		x: affectedVel.x - player.vel.y,
-		y: affectedVel.y - player.vel.y,
-	});
-
-	if (displacement > collision.negligibleDelta || displacement === 0) {
-		player.vel = affectedVel;
-	}
-}
-
 function drawFrame(c: CanvasRenderingContext2D) {
 	const length = vec2.lengthSqrt(movementIntent) || 1;
 	player.vel.x = (movementIntent.x / length) * player.speed;
 	player.vel.y = (movementIntent.y / length) * player.speed;
 
-	applyCollisionToPlayer();
+	collision.applyCollision(player);
 
 	player.pos.x += player.vel.x;
 	player.pos.y += player.vel.y;
