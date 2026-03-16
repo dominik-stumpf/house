@@ -82,14 +82,25 @@ function registerIntentByKeypress() {
 		return intent;
 	}
 
-	window.addEventListener("keydown", (e) => {
+	const handleKeyDown = (e: KeyboardEvent) => {
 		movementIntent.y = getNewIntent(movementIntent.y, y.indexOf(e.code), false);
 		movementIntent.x = getNewIntent(movementIntent.x, x.indexOf(e.code), false);
-	});
-	window.addEventListener("keyup", (e) => {
+	};
+
+	const handleKeyUp = (e: KeyboardEvent) => {
 		movementIntent.y = getNewIntent(movementIntent.y, y.indexOf(e.code), true);
 		movementIntent.x = getNewIntent(movementIntent.x, x.indexOf(e.code), true);
-	});
+	};
+
+	window.addEventListener("keydown", handleKeyDown);
+	window.addEventListener("keyup", handleKeyUp);
+
+	return () => {
+		window.removeEventListener("keydown", handleKeyDown);
+		window.removeEventListener("keyup", handleKeyUp);
+		movementIntent.x = 0;
+		movementIntent.y = 0;
+	};
 }
 
 // == vec2
