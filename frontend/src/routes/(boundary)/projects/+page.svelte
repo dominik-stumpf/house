@@ -6,7 +6,6 @@
 	import Header from "$lib/components/Header.svelte";
 	import Prose from "$lib/components/Prose.svelte";
 	import { config } from "$lib/config";
-	import { tz } from "$lib/tz";
 	import { trans } from "$lib/trans";
 	import { spread } from "$lib/spread";
 
@@ -63,7 +62,7 @@
 						>
 							<time
 								datetime={new Date(project.metadata.publishedAt).toISOString()}
-								>{tz.formatPrettyDate(project.metadata.publishedAt)}</time
+								>{trans.formatPrettyDate(project.metadata.publishedAt)}</time
 							>
 							<!-- / -->
 							<!-- <span>{project.readTimeResults.text}</span> -->

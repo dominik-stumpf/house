@@ -97,19 +97,8 @@ function determineTimeZoneOffsetState(timeZoneOffsetHour: number): OffsetState {
 	return timeZoneOffsetHour < 0 ? offsetState.Ahead : offsetState.Behind;
 }
 
-// TODO: possibly move to trans
-function formatPrettyDate(date: Date) {
-	// extra Date wrapper is for client and server side compatibility
-	return new Date(date).toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
-}
-
 export const tz = {
 	getTimeZoneOffset,
 	determineTimeZoneOffsetState,
 	offsetState,
-	formatPrettyDate,
 };

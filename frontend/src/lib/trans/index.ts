@@ -12,6 +12,16 @@ function newProjectMetadata(metadata: object): ProjectMetadata {
 	return m as ProjectMetadata;
 }
 
+function formatPrettyDate(date: Date) {
+	// extra Date wrapper is for client and server side compatibility
+	return new Date(date).toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+}
+
 export const trans = {
 	newProjectMetadata,
+	formatPrettyDate,
 };
