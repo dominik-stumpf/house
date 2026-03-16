@@ -24,7 +24,7 @@
 <footer class="mt-8">
 	<Boundary>
 		<div class="flex flex-col flex-wrap justify-between gap-8 print:hidden">
-			<div class="flex flex-wrap gap-4">
+			<div class="flex flex-wrap gap-4 font-mono text-sm">
 				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a href={config.platformLinks.email}>Email</a>
 				{#each config.platformNavigation as link (link.name)}
