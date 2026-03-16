@@ -25,3 +25,10 @@
 <div>do canvas viewer</div>
 
 <canvas bind:this={canvas} width="500" height="500" class="border"></canvas>
+
+<style>
+	canvas {
+		image-rendering: pixelated;
+		image-rendering: crisp-edges;
+	}
+</style>
