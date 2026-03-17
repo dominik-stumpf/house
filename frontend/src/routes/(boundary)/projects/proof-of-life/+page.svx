@@ -1,0 +1,12 @@
+---
+title: Proof of Life
+lead: Broadcasting heart monitoring realtime
+publishedAt: 2025-06-08
+layout: project
+---
+
+<script lang="ts">
+    import ProofOfLife from "./ProofOfLife.svelte"
+</script>
+
+<ProofOfLife/>

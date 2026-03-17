@@ -11,7 +11,7 @@ const navigation = {
 const site = {
 	title: "Dominik Stumpf",
 	maintainerName: "Dominik Stumpf",
-	maintainerEmail: "echo@zgzg.work",
+	maintainerEmail: "echo@zgzg.dev",
 	description: "Backend oriented Fullstack web developer.",
 	link: `https://${domain}`,
 	splashImageAbsolutePath: `https://${domain}/media/homepage-splash.png`,
@@ -41,6 +41,7 @@ const platformNavigation = [
 ] as const;
 
 export const config = {
+	api: import.meta.env.DEV ? "http://localhost:8888" : site.link,
 	site,
 	targetTimeZone,
 	navigation,

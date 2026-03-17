@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"main/pof"
 	"os"
 	"path/filepath"
 	"slices"
@@ -74,19 +75,20 @@ func RemoveLastModified(c fiber.Ctx) error {
 func main() {
 	godotenv.Load()
 	app := fiber.New()
-	app.Use(RemoveTrailingSlash, RemoveLastModified)
-	app.Get("*", ResolveNoHTMLExtension, static.New("", static.Config{
-	    FS:     RoutesFS,
-		MaxAge: 0,
-		Compress: true,
+	pof.RegisterRoutes(app)
+	app.Get("*", RemoveTrailingSlash, RemoveLastModified, ResolveNoHTMLExtension, static.New("", static.Config{
+		FS:         RoutesFS,
+		MaxAge:     0,
+		Compress:   true,
 		IndexNames: []string{},
 	}))
-	app.Get("*", static.New("", static.Config{
-	    FS:     AssetFS,
-		IndexNames: []string{},
-		Compress: true,
-		MaxAge: 31536000, // 1 year
+	app.Get("*", RemoveTrailingSlash, RemoveLastModified, static.New("", static.Config{
+		FS:              AssetFS,
+		IndexNames:      []string{},
+		Compress:        true,
+		MaxAge:          31536000, // 1 year
 		NotFoundHandler: HtmlNotFound,
 	}))
-	log.Fatal(app.Listen(fmt.Sprintf(":%s", os.Getenv("APP_PORT"))))
+
+	log.Fatal(app.Listen(fmt.Sprintf(":%s", os.Getenv("PORT"))))
 }

@@ -23,7 +23,7 @@ RUN CGO_ENABLED=0 go build -ldflags='-w -s -extldflags "-static"' -a -o engine &
 RUN CGO_ENABLED=0 go build -ldflags='-w -s -extldflags "-static"' -a -o hc ./healthcheck && upx -9 hc
 
 FROM gcr.io/distroless/static
-ENV APP_PORT=8080
+ENV PORT=8080
 WORKDIR /app
 COPY --from=binary-builder --chown=nonroot:nonroot /backend/engine .
 COPY --from=binary-builder --chown=nonroot:nonroot /backend/hc .
