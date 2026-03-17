@@ -1,6 +1,6 @@
 ---
 title: Proof of Life
-lead: Broadcasting heart monitoring realtime
+lead: Broadcasts heart beats realtime through Server-sent events.
 publishedAt: 2025-06-08
 layout: project
 ---
@@ -10,3 +10,7 @@ layout: project
 </script>
 
 <ProofOfLife/>
+
+Each `1` corresponds to one heart beat, consistent `0` means no pulse or sensor device charge time period.
+
+Note that network conditions can cause high enough delay between beat events, to make the rythm of a heart look unnatural.
