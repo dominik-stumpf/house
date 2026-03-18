@@ -1,4 +1,4 @@
-package pof
+package polife
 
 import (
 	"bufio"
@@ -63,7 +63,7 @@ func RegisterRoutes(app *fiber.App) {
 		}
 	}()
 
-	app.Get("/api/pof", func(c fiber.Ctx) error {
+	app.Get("/api/pol", func(c fiber.Ctx) error {
 		c.Set("Content-Type", "text/event-stream")
 		c.Set("Cache-Control", "no-cache")
 		c.Set("Connection", "keep-alive")
@@ -97,7 +97,7 @@ func RegisterRoutes(app *fiber.App) {
 	monitorTimeout := time.Second * 20
 	monitorTimer := time.NewTimer(0)
 
-	app.Put("/api/pof", func(c fiber.Ctx) error {
+	app.Put("/api/pol", func(c fiber.Ctx) error {
 		apiKey := os.Getenv("API_KEY")
 		authHeader := c.Get("Authorization")
 		isAuthorized := authHeader == "Basic "+apiKey

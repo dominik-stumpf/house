@@ -4,7 +4,7 @@
 	let heartState = $state(0);
 
 	onMount(() => {
-		const eventSource = new EventSource(new URL("/api/pof", config.api));
+		const eventSource = new EventSource(new URL("/api/pol", config.api));
 		let timeoutId: number | undefined;
 		let counter = 0;
 		let bpm: number | undefined;

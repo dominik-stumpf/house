@@ -1,7 +1,7 @@
 package main
 
 import (
-	"backend/pof"
+	"backend/polife"
 	"bytes"
 	"errors"
 	"fmt"
@@ -75,7 +75,7 @@ func RemoveLastModified(c fiber.Ctx) error {
 func main() {
 	godotenv.Load()
 	app := fiber.New()
-	pof.RegisterRoutes(app)
+	polife.RegisterRoutes(app)
 	app.Get("*", RemoveTrailingSlash, RemoveLastModified, ResolveNoHTMLExtension, static.New("", static.Config{
 		FS:         RoutesFS,
 		MaxAge:     0,
