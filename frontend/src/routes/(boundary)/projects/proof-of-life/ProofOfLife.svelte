@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { config } from "$lib/config";
 	import { onMount } from "svelte";
+	import { Spring } from "svelte/motion";
 	let heartState = $state(0);
+	const scale = new Spring(1);
+	const bpmSample = 3;
 
 	onMount(() => {
 		const eventSource = new EventSource(new URL("/api/pol", config.api));
@@ -10,19 +13,26 @@
 		let bpm: number | undefined;
 
 		let intervalId = setInterval(() => {
-			bpm = counter * 6;
-			console.log(`bpm estimate ${bpm} ${counter}`);
+			bpm = counter * (60 / bpmSample);
 			counter = 0;
-		}, 10_000);
-
+		}, bpmSample * 1_000);
+		let startTime = performance.now();
+		let endTime: number;
+		let prevDiff = 0;
 		eventSource.onmessage = (event) => {
+			endTime = performance.now();
+			const diff = Math.round(endTime - startTime);
+			console.log(diff, prevDiff - diff);
+			prevDiff = diff;
+			startTime = endTime;
 			if (event.data === "thump") {
 				heartState = 1;
+				scale.set(Math.min(1.1 + (bpm || 0) / 140, 2), { instant: true });
+				scale.set(1.0);
 				counter += 1;
 				const cooldown =
 					(bpm ? Math.max(100, 270 - bpm ** 1 / 2) : 250) +
 					Math.round(Math.random() * 8 - 4);
-				// console.log(cooldown);
 				if (timeoutId === undefined) {
 					timeoutId = window.setTimeout(() => {
 						heartState = 0;
@@ -44,4 +54,10 @@
 	});
 </script>
 
-<output class="font-mono text-4xl">{heartState}</output>
+<output
+	class="inline-block font-mono text-4xl"
+	style="transform: scale({scale.current}); font-weight: {Math.min(
+		660,
+		Math.floor(400 + 1000 * (scale.current - 1)),
+	)}">{heartState}</output
+>
