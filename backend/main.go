@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/static"
@@ -74,7 +75,11 @@ func RemoveLastModified(c fiber.Ctx) error {
 
 func main() {
 	godotenv.Load()
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		IdleTimeout: 10 * time.Second,
+		ReadTimeout:  5 * time.Second,
+	    WriteTimeout: 60 * time.Second,
+	})
 	polife.RegisterRoutes(app)
 	app.Get("*", RemoveTrailingSlash, RemoveLastModified, ResolveNoHTMLExtension, static.New("", static.Config{
 		FS:         RoutesFS,
