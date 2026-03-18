@@ -28,6 +28,7 @@
 
 		intervalId = window.setInterval(() => {
 			bpm = counter * (60 / bpmSample);
+			console.log(bpm, (bpm || 0) / 250);
 			counter = 0;
 		}, bpmSample * 1_000);
 		// let startTime = performance.now();
@@ -41,7 +42,7 @@
 			// startTime = endTime;
 			if (event.data === "thump") {
 				heartState = 1;
-				scale.set(Math.min(1.1 + (bpm || 0) / 140, 2), { instant: true });
+				scale.set(Math.min(1.1 + (bpm || 0) / 200, 2), { instant: true });
 				scale.set(1.0);
 				counter += 1;
 				const cooldown =
