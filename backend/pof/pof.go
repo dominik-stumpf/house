@@ -98,10 +98,10 @@ func RegisterRoutes(app *fiber.App) {
 	monitorTimer := time.NewTimer(0)
 
 	app.Put("/api/pof", func(c fiber.Ctx) error {
-		apiToken := os.Getenv("API_TOKEN")
+		apiKey := os.Getenv("API_KEY")
 		authHeader := c.Get("Authorization")
-		isAuthorized := authHeader == "Basic "+apiToken
-		if apiToken == "" || !isAuthorized {
+		isAuthorized := authHeader == "Basic "+apiKey
+		if apiKey == "" || !isAuthorized {
 			return c.
 				Status(fiber.StatusUnauthorized).
 				SendString(fasthttp.StatusMessage(fiber.StatusUnauthorized))

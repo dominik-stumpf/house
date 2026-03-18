@@ -36,6 +36,10 @@
 	} satisfies ProjectMetadata);
 </script>
 
+<svelte:head>
+	<title>{m.title}</title>
+</svelte:head>
+
 <Header />
 <main>
 	<Boundary>
