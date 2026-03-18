@@ -11,6 +11,8 @@ layout: project
 
 <ProofOfLife/>
 
-Each `1` corresponds to one heart beat, consistent `0` means no pulse or sensor device charge time period.
+Each `1` corresponds to one heart beat, consistent `0` means no pulse or the sensor device is charging.
 
 Note that network conditions can cause high enough delay between beat events, to make the rythm of a heart look unnatural.
+
+Connection might close after a while to save bandwidth.
