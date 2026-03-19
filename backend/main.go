@@ -2,10 +2,10 @@ package main
 
 import (
 	"backend/polife"
+	"backend/store"
 	"bytes"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"slices"
@@ -13,8 +13,8 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/log"
 	"github.com/gofiber/fiber/v3/middleware/static"
-	"github.com/joho/godotenv"
 )
 
 func ResolveNoHTMLExtension(c fiber.Ctx) error {
@@ -73,18 +73,26 @@ func RemoveLastModified(c fiber.Ctx) error {
 	return nil
 }
 
+type Visit struct {
+	CreatedAt time.Time `json:"createdAt"`
+	PublishedAt time.Time `json:"publishedAt"`
+	ID int `json:"id"`
+}
+
 func main() {
-	godotenv.Load()
 	app := fiber.New(fiber.Config{
 		IdleTimeout: 10 * time.Second,
 		ReadTimeout:  5 * time.Second,
 	    WriteTimeout: 60 * time.Second,
 	})
+
 	polife.RegisterRoutes(app)
+	store.RegisterRoutes(app)
+
 	app.Get("*", RemoveTrailingSlash, RemoveLastModified, ResolveNoHTMLExtension, static.New("", static.Config{
-		FS:         RoutesFS,
-		MaxAge:     0,
-		Compress:   true,
+	    FS:     RoutesFS,
+		MaxAge: 0,
+		Compress: true,
 		IndexNames: []string{},
 	}))
 	app.Get("*", RemoveTrailingSlash, RemoveLastModified, static.New("", static.Config{

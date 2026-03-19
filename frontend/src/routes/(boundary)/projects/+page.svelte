@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
-	import type { page } from "$app/state";
 	import Boundary from "$lib/components/Boundary.svelte";
 	import Footer from "$lib/components/Footer.svelte";
 	import Header from "$lib/components/Header.svelte";
@@ -8,30 +7,15 @@
 	import { config } from "$lib/config";
 	import { trans } from "$lib/trans";
 	import { spread } from "$lib/spread";
+	import { CursorClickIcon } from "phosphor-svelte";
+	import { onMount } from "svelte";
+	import { getViews, projects } from "./projects";
+	import { fly } from "svelte/transition";
 
-	const paths = {
-		"/projects/astral-playland": import("./astral-playland/+page.svx"),
-		"/projects/shaderkit": import("./shaderkit/+page.svx"),
-		"/projects/top-down-collision": import("./top-down-collision/+page.svx"),
-		"/projects/proof-of-life": import("./proof-of-life/+page.svx"),
-	} as const satisfies Partial<
-		Record<typeof page.url.pathname, Promise<typeof import("*.svx")>>
-	>;
-
-	const projects = await Promise.all(
-		Object.entries(paths).map(async ([href, path]) => {
-			const { metadata } = await path;
-			return {
-				path: href as keyof typeof paths,
-				metadata: trans.newProjectMetadata(metadata),
-			};
-		}),
-	);
-
-	projects.sort(
-		(a, b) =>
-			b.metadata.publishedAt.valueOf() - a.metadata.publishedAt.valueOf(),
-	);
+	let views: ReturnType<typeof getViews> | undefined = $state();
+	onMount(() => {
+		views = getViews();
+	});
 </script>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
@@ -49,9 +33,11 @@
 			myself for later reference.
 		</p>
 		<main class="flex flex-col gap-6 py-4">
-			{#each projects as project (project.path)}
+			{#each projects as project, i (project.path)}
 				<a href={resolve(project.path)} class="no-underline">
-					<section class="bg-card rounded border border-border p-6">
+					<section
+						class="bg-card overflow-hidden rounded border border-border p-6"
+					>
 						<h3 class="mt-0!">{project.metadata.title}</h3>
 						<p
 							class="not-prose mt-3 line-clamp-2 text-sm font-normal text-muted-foreground"
@@ -73,30 +59,21 @@
 							<code>{keyword}</code>
 						{/each}
 					{/if} -->
-							<!-- <span class={views ? 'visible' : 'invisible'}>::</span>
-					{#if views}
-						<span
-							class="inline-flex items-center gap-1"
-							title={`${views.find(({ id }) => id === project.id)?.views} Unique views`}
-						>
-							<CursorClickIcon class="text-muted-foreground size-4" />
-							{formatToCompactNumber(
-								// @ts-expect-error ids are validated already
-								views.find(({ id }) => id === project.id).views
-							)}</span
-						>
-					{:else}
-						<span class="invisible inline-flex items-center gap-1">
-							<CursorClickIcon class="text-muted-foreground size-4" />
-							---</span
-						>
-					{/if} -->
+							{#if views}
+								{#await views then data}
+									<span
+										class="inline-flex items-center gap-1"
+										transition:fly={{ y: 10, delay: i * 100 }}
+									>
+										<CursorClickIcon class="text-muted-foreground" />
+										{trans.formatCompactNumber(data[project.path])}</span
+									>
+								{/await}
+							{/if}
 						</div>
 					</section>
 				</a>
 			{/each}
-			<!-- <h2>Showcases</h2> -->
-			<!-- <h2>Guides</h2> -->
 		</main>
 		<blockquote>
 			All entries, assets are version controlled. To see version history, refer

@@ -21,7 +21,15 @@ function formatPrettyDate(date: Date) {
 	});
 }
 
+function formatCompactNumber(target: number) {
+	return Intl.NumberFormat("en", {
+		notation: "compact",
+		maximumFractionDigits: 1,
+	}).format(target);
+}
+
 export const trans = {
 	newProjectMetadata,
 	formatPrettyDate,
+	formatCompactNumber,
 };

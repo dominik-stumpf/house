@@ -26,7 +26,7 @@ func RegisterRoutes(app *fiber.App) {
 	}
 
 	// bpmTicker := time.NewTicker(time.Second)
-	bpmTicker := NewDTicker(time.Second)
+	bpmTicker := NewSmoothTicker(time.Second)
 	bpmTicker.Stop()
 
 	type subscriber struct {
@@ -182,7 +182,7 @@ func (t *SmoothTicker) start() {
 	}
 }
 
-func NewDTicker(d time.Duration) *SmoothTicker {
+func NewSmoothTicker(d time.Duration) *SmoothTicker {
 	if d <= 0 {
 		panic("duration must be positive")
 	}

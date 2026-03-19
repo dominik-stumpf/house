@@ -28,7 +28,6 @@
 
 		intervalId = window.setInterval(() => {
 			bpm = counter * (60 / bpmSample);
-			console.log(bpm, (bpm || 0) / 250);
 			counter = 0;
 		}, bpmSample * 1_000);
 		// let startTime = performance.now();

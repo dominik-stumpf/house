@@ -11,6 +11,7 @@
 	import Prose from "$lib/components/Prose.svelte";
 	import type { Snippet } from "svelte";
 	import { trans } from "$lib/trans";
+	import { config } from "$lib/config";
 
 	export type ProjectMetadata = {
 		title: string;
@@ -37,6 +38,13 @@
 </script>
 
 <svelte:head>
+	<link
+		as="fetch"
+		href={new URL(`/api/read/${m.publishedAt.valueOf() / 1000}`, config.api)
+			.href}
+		crossorigin="anonymous"
+		rel="preload"
+	/>
 	<title>{m.title}</title>
 </svelte:head>
 
