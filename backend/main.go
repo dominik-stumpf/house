@@ -84,7 +84,7 @@ func main() {
 	app.Use(limiter.New(limiter.Config{
 		MaxFunc: func(c fiber.Ctx) int {
 	      if strings.HasPrefix(c.Path(), "/api") {
-	        return 50
+	        return 100
 	      }
 	      return 300
 	    },

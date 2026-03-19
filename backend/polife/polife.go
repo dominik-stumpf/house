@@ -75,8 +75,7 @@ func RegisterRoutes(app *fiber.App) {
 		resp := make(chan error)
 		addSub <- subscriber{ch: ch, resp: resp}
 		if err := <-resp; err != nil {
-			c.Status(fiber.StatusServiceUnavailable)
-			return nil
+			return c.SendStatus(fiber.StatusServiceUnavailable)
 		}
 
 		c.Status(fiber.StatusOK).RequestCtx().SetBodyStreamWriter(fasthttp.StreamWriter(func(w *bufio.Writer) {
@@ -105,16 +104,14 @@ func RegisterRoutes(app *fiber.App) {
 		isAuthorized := authHeader == "Basic "+apiKey
 		if apiKey == "" || !isAuthorized {
 			return c.
-				Status(fiber.StatusUnauthorized).
-				SendString(fasthttp.StatusMessage(fiber.StatusUnauthorized))
+				SendStatus(fiber.StatusUnauthorized)
 		}
 
 		bpm, err := strconv.ParseUint(string(c.Body()), 10, 8)
 		if err != nil {
 			log.Info("failed to parse bpm", "error", err)
 			return c.
-				Status(fiber.StatusBadRequest).
-				SendString(fasthttp.StatusMessage(fiber.StatusBadRequest))
+				SendStatus(fiber.StatusBadRequest)
 		}
 
 		c.Status(fiber.StatusNoContent)

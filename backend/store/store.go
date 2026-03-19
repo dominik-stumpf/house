@@ -44,13 +44,11 @@ func RegisterRoutes(app *fiber.App) {
 	app.Get("api/read/:date", func(c fiber.Ctx) error {
 			date, err := strconv.ParseInt(c.Params("date"), 10, 64)
 		    if err != nil {
-				c.Status(fiber.StatusBadRequest)
-				return nil
+				return c.SendStatus(fiber.StatusBadRequest)
 		    }
 		    tm := time.Unix(date, 0)
 			if tm.Year() < 2020 || tm.Year() > 2040 {
-				c.Status(fiber.StatusBadRequest)
-				return nil
+				return c.SendStatus(fiber.StatusBadRequest)
 			}
 			_, err = db.Exec(`INSERT INTO visits (published_at) VALUES (?)`, tm.Format(time.DateOnly))
 			if err != nil {
@@ -68,8 +66,7 @@ func RegisterRoutes(app *fiber.App) {
 		`)
 		if err != nil {
 			log.Error(err)
-			c.Status(fiber.StatusInternalServerError)
-			return err
+			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 		defer rows.Close()
 		visits := map[string]int{};
