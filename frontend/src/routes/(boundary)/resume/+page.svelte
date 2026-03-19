@@ -29,7 +29,7 @@
 			<h3 class="mb-0!">ZGEN</h3>
 			<time class="text-sm text-muted-foreground">2024-2025</time>
 			<p>
-				Worked at guild.xyz as a frontend, devops and backend engineer, helped
+				Worked at guild.xyz as a fullstack engineer, most notably played role in
 				laying the foundation of a monorepo during a rewrite.
 			</p>
 
@@ -39,24 +39,25 @@
 				and tools I use:
 			</p>
 			<ul>
-				<li>Go : Backend language</li>
-				<li>PostgreSQL, Redis : Database</li>
-				<li>TailwindCSS : CSS framework</li>
-				<li>React, Svelte : Component framework</li>
-				<li>NextJS, Sveltekit, Hono : App framework</li>
-				<li>Figma : UI design tool</li>
-				<li>&hellip;</li>
+				<li><b>Backend</b>: Go, PostgreSQL, Redis, Hono (Nodejs)</li>
+				<li><b>Frontend</b>: React, Svelte, TailwindCSS</li>
+				<li><b>Infra & tooling</b>: Docker ecosystem, Turborepo</li>
+				<li><b>Observability</b>: Grafana stack</li>
+				<!-- <li>&hellip;</li> -->
 			</ul>
 
 			<h2>Beyond the web</h2>
 			<p>
 				I'm an avid learner when it comes to programming, I have experience with
-				web scraping, basic networking and GNU/Linux. I enjoy maintaining my own
-				home lab with FOSS and contribute to tools I find useful.
+				web scraping, networking and GNU/Linux. I enjoy maintaining my own home
+				lab with FOSS and contribute to tools I find useful.
 			</p>
 
 			<h2>Interests</h2>
-			<p>Game development, computer graphics, low-level, minimal software</p>
+			<p>
+				Game development, computer graphics, minimal software, automation,
+				backend security
+			</p>
 			<div>
 				<h2>Contact links</h2>
 				<div class="flex flex-col">

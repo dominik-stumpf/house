@@ -30,8 +30,8 @@
 			</p>
 			<p>
 				When making websites my ideology is <b>keeping things simple</b> and snappy.
-				I love experimenting around modern tech, lately involving Go and Svelte while
-				also appreciating the more established ones such as PostgreSQL and Unix.
+				I enjoy experimenting with modern tech, especially Go and Svelte lately, while
+				also appreciating established technologies like PostgreSQL and Unix.
 			</p>
 		</Prose>
 	</Boundary>
