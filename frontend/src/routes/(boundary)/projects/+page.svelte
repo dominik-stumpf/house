@@ -84,12 +84,6 @@
 			>
 				page's repository.</a
 			>
-			Also note that the projects currently live on
-			<a href={config.platformLinks.github}>GitHub</a>, however I'm in the
-			process of moving them to
-			<a href={`${config.platformLinks.forgejo}`} {...spread.externalLink()}>
-				a self-hosted forgejo instance.
-			</a>
 		</blockquote>
 	</Prose>
 </Boundary>
