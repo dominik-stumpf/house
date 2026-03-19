@@ -60,7 +60,7 @@ func RemoveTrailingSlash(c fiber.Ctx) error {
 
 func RemoveLastModified(c fiber.Ctx) error {
 	if err := c.Next(); err != nil {
-	    return err
+		return err
 	}
 	c.Response().Header.Del("last-modified")
 	return nil
@@ -80,7 +80,7 @@ func IPRateLimit(expiration time.Duration, rps, burst int) func(fiber.Ctx) error
 			time.Sleep(time.Minute)
 			mu.Lock()
 			for ip, client := range clients {
-				if time.Since(client.lastSeen) > 3 * time.Minute {
+				if time.Since(client.lastSeen) > 3*time.Minute {
 					delete(clients, ip)
 				}
 			}

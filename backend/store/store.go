@@ -37,28 +37,28 @@ func initDB() *sql.DB {
 
 	log.Info("db init")
 
-	return db;
+	return db
 }
 
 func RegisterRoutes(app *fiber.App) {
 	db := initDB()
-	app.Get("api/read/:date", mware.IPRateLimit(6 * time.Minute, 1, 5), func(c fiber.Ctx) error {
-			date, err := strconv.ParseInt(c.Params("date"), 10, 64)
-		    if err != nil {
-				return c.SendStatus(fiber.StatusBadRequest)
-		    }
-		    tm := time.Unix(date, 0)
-			if tm.Year() < 2020 || tm.Year() > 2040 {
-				return c.SendStatus(fiber.StatusBadRequest)
-			}
-			_, err = db.Exec(`INSERT INTO visits (published_at) VALUES (?)`, tm.Format(time.DateOnly))
-			if err != nil {
-			   fmt.Printf("insert err %s", err)
-			}
-		    fmt.Println(tm)
-			c.Status(fiber.StatusNoContent)
-			return nil
-		})
+	app.Get("api/read/:date", mware.IPRateLimit(6*time.Minute, 1, 5), func(c fiber.Ctx) error {
+		date, err := strconv.ParseInt(c.Params("date"), 10, 64)
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+		tm := time.Unix(date, 0)
+		if tm.Year() < 2020 || tm.Year() > 2040 {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+		_, err = db.Exec(`INSERT INTO visits (published_at) VALUES (?)`, tm.Format(time.DateOnly))
+		if err != nil {
+			fmt.Printf("insert err %s", err)
+		}
+		fmt.Println(tm)
+		c.Status(fiber.StatusNoContent)
+		return nil
+	})
 
 	app.Get("api/dates", func(c fiber.Ctx) error {
 		rows, err := db.Query(`
@@ -70,7 +70,7 @@ func RegisterRoutes(app *fiber.App) {
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 		defer rows.Close()
-		visits := map[string]int{};
+		visits := map[string]int{}
 		for rows.Next() {
 			var publishedAt time.Time
 			var count int

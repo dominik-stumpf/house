@@ -18,7 +18,7 @@ import (
 const maxSubs = 100
 
 func RegisterRoutes(app *fiber.App) {
-	if (os.Getenv("ENV") == "development") {
+	if os.Getenv("ENV") == "development" {
 		app.Use(cors.New(cors.Config{
 			AllowOrigins: []string{"*"},
 			AllowHeaders: []string{"Cache-Control"},
@@ -135,13 +135,13 @@ func RegisterRoutes(app *fiber.App) {
 
 // TODO: rework this timer
 type SmoothTicker struct {
-	C chan time.Time
-	interval time.Duration
+	C              chan time.Time
+	interval       time.Duration
 	targetInterval time.Duration
-	mu       sync.Mutex
-	stop chan struct{}
-	isStopped bool
-	timer *time.Timer
+	mu             sync.Mutex
+	stop           chan struct{}
+	isStopped      bool
+	timer          *time.Timer
 }
 
 func (t *SmoothTicker) Reset(d time.Duration) {
@@ -164,17 +164,17 @@ func (t *SmoothTicker) Stop() {
 func (t *SmoothTicker) start() {
 	for {
 		select {
-			case tc := <- t.timer.C:
-				t.C <- tc
-				t.mu.Lock()
-				t.interval = time.Duration((lerp(float64(t.interval), float64(t.targetInterval), 0.3)))
-				t.timer.Reset(t.interval)
-				t.mu.Unlock()
-			case <- t.stop:
-				t.timer.Stop()
-				t.mu.Lock()
-				t.isStopped = true
-				t.mu.Unlock()
+		case tc := <-t.timer.C:
+			t.C <- tc
+			t.mu.Lock()
+			t.interval = time.Duration((lerp(float64(t.interval), float64(t.targetInterval), 0.3)))
+			t.timer.Reset(t.interval)
+			t.mu.Unlock()
+		case <-t.stop:
+			t.timer.Stop()
+			t.mu.Lock()
+			t.isStopped = true
+			t.mu.Unlock()
 		}
 	}
 }
@@ -183,17 +183,17 @@ func NewSmoothTicker(d time.Duration) *SmoothTicker {
 	if d <= 0 {
 		panic("duration must be positive")
 	}
-	t := SmoothTicker {
-		C: make(chan time.Time),
-		stop: make(chan struct{}),
-		interval: d,
+	t := SmoothTicker{
+		C:              make(chan time.Time),
+		stop:           make(chan struct{}),
+		interval:       d,
 		targetInterval: d,
-		timer: time.NewTimer(d),
+		timer:          time.NewTimer(d),
 	}
 	go t.start()
 	return &t
 }
 
 func lerp(a, b, t float64) float64 {
-  return (1 - t) * a + t * b;
+	return (1-t)*a + t*b
 }
