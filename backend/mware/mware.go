@@ -66,7 +66,7 @@ func RemoveLastModified(c fiber.Ctx) error {
 	return nil
 }
 
-func IPRateLimit(expiration time.Duration, rps, burst int) func(fiber.Ctx) error {
+func IPRateLimit(expiration time.Duration, rps float64, burst int) func(fiber.Ctx) error {
 	type client struct {
 		limiter  *rate.Limiter
 		lastSeen time.Time
