@@ -1,6 +1,7 @@
 package store
 
 import (
+	"backend/mware"
 	"database/sql"
 	"fmt"
 	"os"
@@ -41,7 +42,7 @@ func initDB() *sql.DB {
 
 func RegisterRoutes(app *fiber.App) {
 	db := initDB()
-	app.Get("api/read/:date", func(c fiber.Ctx) error {
+	app.Get("api/read/:date", mware.IPRateLimit(6 * time.Minute, 1, 5), func(c fiber.Ctx) error {
 			date, err := strconv.ParseInt(c.Params("date"), 10, 64)
 		    if err != nil {
 				return c.SendStatus(fiber.StatusBadRequest)
