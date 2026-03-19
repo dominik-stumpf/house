@@ -14,6 +14,7 @@ import (
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/log"
+	"github.com/gofiber/fiber/v3/middleware/limiter"
 	"github.com/gofiber/fiber/v3/middleware/static"
 )
 
@@ -73,18 +74,28 @@ func RemoveLastModified(c fiber.Ctx) error {
 	return nil
 }
 
-type Visit struct {
-	CreatedAt time.Time `json:"createdAt"`
-	PublishedAt time.Time `json:"publishedAt"`
-	ID int `json:"id"`
-}
-
 func main() {
 	app := fiber.New(fiber.Config{
 		IdleTimeout: 10 * time.Second,
 		ReadTimeout:  5 * time.Second,
 	    WriteTimeout: 60 * time.Second,
 	})
+
+	app.Use(limiter.New(limiter.Config{
+		MaxFunc: func(c fiber.Ctx) int {
+	      if strings.HasPrefix(c.Path(), "/api") {
+	        return 50
+	      }
+	      return 300
+	    },
+		ExpirationFunc: func(c fiber.Ctx) time.Duration {
+	      if strings.HasPrefix(c.Path(), "/api") {
+	        return 2 * time.Minute
+	      }
+	      return 30 * time.Second
+	    },
+	    LimiterMiddleware: limiter.SlidingWindow{},
+	}))
 
 	polife.RegisterRoutes(app)
 	store.RegisterRoutes(app)

@@ -10,7 +10,6 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/log"
 
-	// _ "github.com/mattn/go-sqlite3"
 	_ "modernc.org/sqlite"
 )
 
