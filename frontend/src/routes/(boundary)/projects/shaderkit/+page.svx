@@ -7,8 +7,14 @@ layout: project
 
 <script lang="ts">
     import { config } from "$lib/config"
+    const editorLink = config.platformLinks.shaderkit+"/create"
 </script>
 
-[View in full size]({config.platformLinks.shaderkit})
+The [editor]({editorLink}) is based on chromium's implementation of WebGPU, and expected to work best with it.
+
+For other browsers and platforms, such as linux experimental flags or nightly versions might need to be enabled in order to work.
+Here you can find an [up to date status](https://github.com/gpuweb/gpuweb/wiki/Implementation-Status) for each browser and platform.
+
+[View Shaderkit home page]({config.platformLinks.shaderkit})
 
 **This page is work in progress.**
