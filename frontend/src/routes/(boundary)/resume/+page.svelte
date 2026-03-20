@@ -55,7 +55,7 @@
 
 			<h2>Interests</h2>
 			<p>
-				Game development, computer graphics, minimal software, automation,
+				Game development, computer graphics, minimal software, better Internet,
 				backend security
 			</p>
 			<div>
