@@ -23,7 +23,7 @@ const targetTimeZone = "Europe/Budapest";
 const platformLinks = {
 	github: "https://github.com/dominik-stumpf",
 	forgejo: `https://git.${domain}/zgzg`,
-	linkedin: "https://linkedin.com/in/dominik-stumpf",
+	linkedin: "https://linkedin.com/in/dominikstumpf",
 	astralPlayland: "https://astral-playland.vercel.app",
 	shaderkit: `https://shaderkit.${domain}`,
 	email: `mailto:${site.maintainerEmail}`,
