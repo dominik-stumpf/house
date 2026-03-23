@@ -35,7 +35,7 @@
 
 			<h2>Web related</h2>
 			<p>
-				Javascript (+Typescript) user for more than 3 years. Common technologies
+				Javascript (+Typescript) user for more than 4 years. Common technologies
 				and tools I use:
 			</p>
 			<ul>
