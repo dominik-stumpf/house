@@ -30,7 +30,17 @@
 			<time class="text-sm text-muted-foreground">2024-2025</time>
 			<p>
 				Worked at guild.xyz as a fullstack engineer, most notably played role in
-				laying the foundation of a monorepo during a rewrite.
+				laying the foundation of a monorepo during a rewrite. This included
+				general devops tasks such as managing database and setting up a
+				Turborepo along with GitHub actions, Docker and observability.
+			</p>
+			<h3 class="mb-0!">Self-employment</h3>
+			<time class="text-sm text-muted-foreground">2025-Present</time>
+			<p>
+				Creating <a href="/projects">side projects</a> with Go while diving into Docker,
+				Linux, Grafana stack, Cloudflare and SQL. For example this website and all
+				its subdomains run on a homelab server on cloudflare tunnel using the tools
+				mentioned.
 			</p>
 
 			<h2>Web related</h2>
@@ -43,20 +53,20 @@
 				<li><b>Frontend</b>: React, Svelte, TailwindCSS</li>
 				<li><b>Infra & tooling</b>: Docker ecosystem, Turborepo</li>
 				<li><b>Observability</b>: Grafana stack</li>
-				<!-- <li>&hellip;</li> -->
 			</ul>
 
-			<h2>Beyond the web</h2>
+			<h2>About me</h2>
 			<p>
-				I'm an avid learner when it comes to programming, I have experience with
-				web scraping, networking and GNU/Linux. I enjoy maintaining my own home
-				lab with FOSS and contribute to tools I find useful.
+				I'm an avid learner when it comes to programming, I'm open to learning
+				new tools and trying different approaches. I'm a good team player,
+				despite not having excellent communication skills. I don't have a strong
+				aptitude for UI design.
 			</p>
 
-			<h2>Interests</h2>
+			<h3>Interests</h3>
 			<p>
 				Game development, computer graphics, minimal software, better Internet,
-				backend security
+				backend security, open source
 			</p>
 			<div>
 				<h2>Contact links</h2>

@@ -30,10 +30,10 @@ const platformLinks = {
 } as const;
 
 const platformNavigation = [
-	{
-		href: platformLinks.linkedin,
-		name: "LinkedIn",
-	},
+	// {
+	// 	href: platformLinks.linkedin,
+	// 	name: "LinkedIn",
+	// },
 	{
 		href: platformLinks.github,
 		name: "GitHub",
