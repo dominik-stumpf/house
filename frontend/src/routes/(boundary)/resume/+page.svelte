@@ -29,18 +29,17 @@
 			<h3 class="mb-0!">ZGEN</h3>
 			<time class="text-sm text-muted-foreground">2024-2025</time>
 			<p>
-				Worked at guild.xyz as a fullstack engineer, most notably played role in
-				laying the foundation of a monorepo during a rewrite. This included
-				general devops tasks such as managing database and setting up a
-				Turborepo along with GitHub actions, Docker and observability.
+				Worked at guild.xyz as a fullstack engineer for more than a year, most
+				notably played role in laying the foundation of a monorepo during a
+				rewrite. This included general devops tasks such as managing database
+				and setting up a Turborepo along with GitHub actions, Docker and
+				observability.
 			</p>
-			<h3 class="mb-0!">Self-employment</h3>
+			<h3 class="mb-0!">Creating side projects</h3>
 			<time class="text-sm text-muted-foreground">2025-Present</time>
 			<p>
-				Creating <a href="/projects">side projects</a> with Go while diving into Docker,
-				Linux, Grafana stack, Cloudflare and SQL. For example this website and all
-				its subdomains run on a homelab server on cloudflare tunnel using the tools
-				mentioned.
+				Creating <a href="/projects">projects</a> with Go while diving into Docker,
+				Linux, Grafana stack, Cloudflare and SQL.
 			</p>
 
 			<h2>Web related</h2>
