@@ -39,7 +39,8 @@
 			<time class="text-sm text-muted-foreground">2025-Present</time>
 			<p>
 				Creating <a href="/projects">projects</a> with Go while diving into Docker,
-				Linux, Grafana stack, Cloudflare and SQL.
+				Linux, Grafana stack, Cloudflare and SQL. Experimenting with AI integrated
+				workflow.
 			</p>
 
 			<h2>Web related</h2>
