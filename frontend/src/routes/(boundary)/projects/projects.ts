@@ -7,6 +7,7 @@ const paths = {
 	"/projects/shaderkit": import("./shaderkit/+page.svx"),
 	"/projects/top-down-collision": import("./top-down-collision/+page.svx"),
 	"/projects/proof-of-life": import("./proof-of-life/+page.svx"),
+	"/projects/homelab": import("./homelab/+page.svx"),
 } as const satisfies Partial<
 	Record<typeof page.url.pathname, Promise<typeof import("*.svx")>>
 >;
