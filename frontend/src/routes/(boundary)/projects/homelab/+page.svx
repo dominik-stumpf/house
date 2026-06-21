@@ -12,4 +12,4 @@ layout: project
 
 [View source code]({homelabLink})
 
-The site ({conifg.site.link} and its subdomains generally) uses Go as a backend, and Svelte as a static site generator and docker for different services.
+The site ({config.site.link} and its subdomains generally) uses Go as a backend, and Svelte as a static site generator and docker for different services.
