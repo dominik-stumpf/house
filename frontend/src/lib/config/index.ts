@@ -11,7 +11,7 @@ const navigation = {
 const site = {
 	title: "Dominik Stumpf",
 	maintainerName: "Dominik Stumpf",
-	maintainerEmail: "echo@zgzg.dev",
+	maintainerEmail: "s.dominik.work@gmail.com",
 	description: "Backend oriented Fullstack web developer.",
 	link: `https://${domain}`,
 	splashImageAbsolutePath: `https://${domain}/media/homepage-splash.png`,
