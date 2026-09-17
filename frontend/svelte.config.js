@@ -47,8 +47,8 @@ const config = {
 		adapter: adapter({
 			// default options are shown. On some platforms
 			// these options are set automatically — see below
-			pages: "../backend/spa_routes",
-			assets: "../backend/spa_assets",
+			pages: "build",
+			assets: "build",
 			// fallback: "404.html",
 			// precompress: true,
 			strict: true,

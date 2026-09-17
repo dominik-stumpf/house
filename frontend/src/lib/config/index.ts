@@ -4,7 +4,6 @@ const domain = "zgzg.dev";
 
 const navigation = {
 	about: "/",
-	resume: "/resume",
 	projects: "/projects",
 } as const satisfies Record<string, typeof page.url.pathname>;
 
@@ -41,7 +40,6 @@ const platformNavigation = [
 ] as const;
 
 export const config = {
-	api: import.meta.env.DEV ? "http://localhost:8888" : site.link,
 	site,
 	targetTimeZone,
 	navigation,

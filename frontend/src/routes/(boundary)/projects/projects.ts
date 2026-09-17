@@ -1,13 +1,10 @@
 import type { page } from "$app/state";
-import { config } from "$lib/config";
 import { trans } from "$lib/trans";
 
 const paths = {
 	"/projects/astral-playland": import("./astral-playland/+page.svx"),
 	"/projects/shaderkit": import("./shaderkit/+page.svx"),
 	"/projects/top-down-collision": import("./top-down-collision/+page.svx"),
-	"/projects/proof-of-life": import("./proof-of-life/+page.svx"),
-	"/projects/homelab": import("./homelab/+page.svx"),
 } as const satisfies Partial<
 	Record<typeof page.url.pathname, Promise<typeof import("*.svx")>>
 >;
@@ -27,7 +24,7 @@ export const projects = (
 );
 
 export async function getViews(): Promise<Record<string, number>> {
-	return fetch(new URL("/api/dates", config.api))
+	return fetch("/api/dates")
 		.then((res) => res.json())
 		.then((data) => {
 			const d = data as unknown as Record<string, number>;

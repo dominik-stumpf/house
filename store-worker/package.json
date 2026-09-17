@@ -1,0 +1,17 @@
+{
+	"name": "store-worker",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "wrangler dev",
+		"deploy": "wrangler deploy",
+		"types": "wrangler types",
+		"db:migrate:local": "wrangler d1 migrations apply house-store --local",
+		"db:migrate:remote": "wrangler d1 migrations apply house-store --remote"
+	},
+	"devDependencies": {
+		"wrangler": "^4.0.0",
+		"typescript": "5.9.3"
+	}
+}
