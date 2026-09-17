@@ -10,6 +10,7 @@ layout: project
 </script>
 
 <iframe
+    title="Avoid Balls"
     src="https://itch.io/embed-upload/18743822?color=000000"
     allowfullscreen
     class="w-full h-96"
