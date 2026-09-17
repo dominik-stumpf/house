@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS visits (
+  published_at DATE PRIMARY KEY,
+  count INTEGER NOT NULL DEFAULT 0
+);

@@ -6,7 +6,6 @@
 	const navlinks = [
 		{ href: config.navigation.about, name: "about" },
 		{ href: config.navigation.projects, name: "projects" },
-		{ href: config.navigation.resume, name: "résumé" },
 	] as const;
 </script>
 

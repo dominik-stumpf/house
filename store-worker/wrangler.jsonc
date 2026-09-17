@@ -1,0 +1,20 @@
+{
+	"name": "house-store",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-09-17",
+	"assets": {
+		"directory": "../frontend/build",
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "house-store",
+			"database_id": "a0137f0c-9bb7-4d1e-a146-b74fd35156e2",
+		},
+	],
+	"observability": {
+		"enabled": true,
+		"logs": { "enabled": true, "head_sampling_rate": 1 },
+		"traces": { "enabled": true, "head_sampling_rate": 0.1 },
+	},
+}
