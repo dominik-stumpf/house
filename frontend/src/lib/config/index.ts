@@ -25,7 +25,6 @@ const platformLinks = {
 	linkedin: "https://linkedin.com/in/dominikstumpf",
 	astralPlayland: "https://astral-playland.vercel.app",
 	itch: "https://zgzgdev.itch.io",
-	avoidballs: "https://zgzgdev.itch.io/avoidballs",
 	email: `mailto:${site.maintainerEmail}`,
 } as const;
 
