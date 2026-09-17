@@ -5,7 +5,6 @@
 	import Header from "$lib/components/Header.svelte";
 	import Prose from "$lib/components/Prose.svelte";
 	import { config } from "$lib/config";
-	import { spread } from "$lib/spread";
 </script>
 
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
@@ -19,25 +18,15 @@
 		<Prose>
 			<h2>{config.site.description}</h2>
 			<p>
-				Hello! I'm <em>Dominik Stumpf</em>, software engineer based in Hungary,
-				I'm the creator of
-				<a href={config.platformLinks.shaderkit} {...spread.externalLink()}
-					>Shaderkit</a
-				>, a WebGPU based shader sandbox. In my freetime I like fiddling around
-				with computer graphics and trying game development. Besides that, I
-				sometimes document my tech related
+				Hello! I'm <em>Dominik Stumpf</em>, software engineer based in Hungary.
+				In my freetime I like fiddling around with computer graphics and trying
+				game development. Besides that, I sometimes document my tech related
 				<a href={resolve("/projects")}>findings or experiments here</a>.
 			</p>
 			<!-- <p>
 				When making websites my ideology is <b>keeping things simple</b> and snappy.
 				I enjoy experimenting with modern tech, especially Go and Svelte lately, while
 				also appreciating established technologies like PostgreSQL and Unix.
-			</p>
-			<p>
-				Recent notable projects are <a
-					href={config.platformLinks.shaderkit}
-					{...spread.externalLink()}>Shaderkit</a
-				>, a WebGPU based shader sandbox
 			</p> -->
 		</Prose>
 	</Boundary>

@@ -24,7 +24,8 @@ const platformLinks = {
 	forgejo: `https://git.${domain}/zgzg`,
 	linkedin: "https://linkedin.com/in/dominikstumpf",
 	astralPlayland: "https://astral-playland.vercel.app",
-	shaderkit: `https://shaderkit.${domain}`,
+	itch: "https://zgzgdev.itch.io",
+	avoidballs: "https://zgzgdev.itch.io/avoidballs",
 	email: `mailto:${site.maintainerEmail}`,
 } as const;
 
@@ -36,6 +37,10 @@ const platformNavigation = [
 	{
 		href: platformLinks.github,
 		name: "GitHub",
+	},
+	{
+		href: platformLinks.itch,
+		name: "itch.io",
 	},
 ] as const;
 

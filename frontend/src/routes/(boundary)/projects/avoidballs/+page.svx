@@ -1,0 +1,18 @@
+---
+title: Avoid Balls
+lead: Fast-paced avoidance game.
+publishedAt: 2026-09-17
+layout: project
+---
+
+<script lang="ts">
+    import { config } from "$lib/config"
+</script>
+
+<iframe
+    src="https://itch.io/embed-upload/18743822?color=000000"
+    allowfullscreen
+    class="w-full h-96"
+></iframe>
+
+[Play on itch.io]({config.platformLinks.avoidballs})
