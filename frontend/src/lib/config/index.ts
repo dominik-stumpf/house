@@ -21,10 +21,10 @@ const targetTimeZone = "Europe/Budapest";
 
 const platformLinks = {
 	github: "https://github.com/dominik-stumpf",
-	forgejo: `https://git.${domain}/zgzg`,
 	linkedin: "https://linkedin.com/in/dominikstumpf",
 	astralPlayland: "https://astral-playland.vercel.app",
 	itch: "https://zgzgdev.itch.io",
+	musicPlayer: "https://music.zgzg.dev",
 	email: `mailto:${site.maintainerEmail}`,
 } as const;
 

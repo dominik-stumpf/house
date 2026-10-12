@@ -3,4 +3,4 @@ packages: []
 onlyBuiltDependencies:
   - esbuild
 
-useNodeVersion: 24.13.0
+nodeVersion: 24.13.0

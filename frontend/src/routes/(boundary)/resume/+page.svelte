@@ -38,8 +38,9 @@
 			<h3 class="mb-0!">Creating side projects</h3>
 			<time class="text-sm text-muted-foreground">2025-Present</time>
 			<p>
-				Creating <a href="/projects">projects</a> with Go while diving into Docker,
-				Linux, Grafana stack, Cloudflare and SQL. Experimenting with AI integrated
+				Creating <a href="/projects">projects</a> I find useful myself, like a local-first
+				music player built with Svelte and Go, while diving into Docker, Linux,
+				Grafana stack, Cloudflare and SQL. Experimenting with AI integrated
 				workflow.
 			</p>
 
@@ -65,8 +66,8 @@
 
 			<h3>Interests</h3>
 			<p>
-				Game development, computer graphics, minimal software, better Internet,
-				backend security, open source
+				Building useful, minimal software, better Internet, backend security,
+				open source
 			</p>
 			<div>
 				<h2>Contact links</h2>

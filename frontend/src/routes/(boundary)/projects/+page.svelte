@@ -4,9 +4,7 @@
 	import Footer from "$lib/components/Footer.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import Prose from "$lib/components/Prose.svelte";
-	import { config } from "$lib/config";
 	import { trans } from "$lib/trans";
-	import { spread } from "$lib/spread";
 	import { CursorClickIcon } from "phosphor-svelte";
 	import { onMount } from "svelte";
 	import { getViews, projects } from "./projects";
@@ -75,16 +73,6 @@
 				</a>
 			{/each}
 		</main>
-		<blockquote>
-			All entries, assets are version controlled. To see version history, refer
-			to the
-			<a
-				href={`${config.platformLinks.forgejo}/house`}
-				{...spread.externalLink()}
-			>
-				page's repository.</a
-			>
-		</blockquote>
 	</Prose>
 </Boundary>
 
