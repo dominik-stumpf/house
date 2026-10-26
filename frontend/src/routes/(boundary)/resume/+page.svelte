@@ -97,11 +97,12 @@
 			</div>
 
 			<blockquote class="hidden print:block">
-				Note: This is a printed version of my homepage
-				<a href={config.site.link} {...spread.externalLink()}
-					>{new URL(config.site.link).host}</a
-				>, where you can find up to date additional information about me and my
-				works. This file was generated at {new Date().toUTCString()}
+				Note: This is a printed version of
+				<a
+					href={`${config.site.link}/resume`}
+					{...spread.externalLink()}>{new URL(config.site.link).host}/resume</a
+				>, where you can find an up to date version of this resume. This file
+				was generated at {new Date().toUTCString()}
 			</blockquote>
 		</Prose>
 	</Boundary>
