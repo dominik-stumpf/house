@@ -3,6 +3,8 @@ import { trans } from "$lib/trans";
 
 const paths = {
 	"/projects/music-player": import("./music-player/+page.svx"),
+	"/projects/jobboard": import("./jobboard/+page.svx"),
+	"/projects/shaderkit": import("./shaderkit/+page.svx"),
 	"/projects/astral-playland": import("./astral-playland/+page.svx"),
 	"/projects/top-down-collision": import("./top-down-collision/+page.svx"),
 	"/projects/avoidballs": import("./avoidballs/+page.svx"),

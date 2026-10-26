@@ -4,9 +4,20 @@
 	import { spread } from "$lib/spread";
 	import Header from "$lib/components/Header.svelte";
 	import Boundary from "$lib/components/Boundary.svelte";
+	import { env } from "$env/dynamic/public";
 
+	/** @type {{ name: string; href: string; display?: string }[]} */
 	const contactLinks = [
 		{ name: "Email", href: config.platformLinks.email },
+		...(env.PUBLIC_PHONE_NUMBER
+			? [
+					{
+						name: "Phone",
+						href: `tel:${env.PUBLIC_PHONE_NUMBER}`,
+						display: env.PUBLIC_PHONE_NUMBER,
+					},
+				]
+			: []),
 		...config.platformNavigation,
 	];
 </script>
@@ -22,7 +33,9 @@
 		<Prose>
 			<h1 class="font-serif font-normal tracking-tight text-pretty">
 				<i>Dominik Stumpf</i> &mdash;
-				<span class="text-muted-foreground">Software engineer</span>
+				<span class="text-muted-foreground"
+					>Software engineer</span
+				>
 			</h1>
 
 			<h2>Experience</h2>
@@ -38,21 +51,21 @@
 			<h3 class="mb-0!">Creating side projects</h3>
 			<time class="text-sm text-muted-foreground">2025-Present</time>
 			<p>
-				Creating <a href="/projects">projects</a> I find useful myself, like a local-first
-				music player built with Svelte and Go, while diving into Docker, Linux,
-				Grafana stack, Cloudflare and SQL. Experimenting with AI integrated
-				workflow.
+				Creating <a href="/projects">projects</a> I find useful myself, most
+				notably <a href="/projects/music-player">Music Player</a>, a
+				local-first music player built with Svelte, and
+				<a href="/projects/jobboard">Job Board</a>, a job aggregator that
+				indexes hundreds of thousands of postings, while diving into Docker,
+				Linux, Grafana stack, Cloudflare and SQL. Experimenting with AI
+				integrated workflow.
 			</p>
 
 			<h2>Web related</h2>
-			<p>
-				Javascript (+Typescript) user for more than 4 years. Common technologies
-				and tools I use:
-			</p>
+			<p>Common technologies and tools I use:</p>
 			<ul>
-				<li><b>Backend</b>: Go, PostgreSQL, Redis, Hono (Nodejs)</li>
-				<li><b>Frontend</b>: React, Svelte, TailwindCSS</li>
-				<li><b>Infra & tooling</b>: Docker ecosystem, Turborepo</li>
+				<li><b>Backend</b>: Go, PostgreSQL, Redis</li>
+				<li><b>Frontend</b>: Svelte, TailwindCSS</li>
+				<li><b>Infra & tooling</b>: Docker ecosystem</li>
 				<li><b>Observability</b>: Grafana stack</li>
 			</ul>
 
@@ -60,14 +73,12 @@
 			<p>
 				I'm an avid learner when it comes to programming, I'm open to learning
 				new tools and trying different approaches. I'm a good team player,
-				despite not having excellent communication skills. I don't have a strong
-				aptitude for UI design.
+				despite not having excellent communication skills.
 			</p>
 
 			<h3>Interests</h3>
 			<p>
-				Building useful, minimal software, better Internet, backend security,
-				open source
+				Building useful, minimal software, better Internet, open source
 			</p>
 			<div>
 				<h2>Contact links</h2>
@@ -76,8 +87,9 @@
 						<div>
 							{contactLink.name}:
 							<a href={contactLink.href} {...spread.externalLink()}
-								>{new URL(contactLink.href).hostname +
-									new URL(contactLink.href).pathname}</a
+								>{contactLink.display ??
+									new URL(contactLink.href).hostname +
+										new URL(contactLink.href).pathname}</a
 							>
 						</div>
 					{/each}

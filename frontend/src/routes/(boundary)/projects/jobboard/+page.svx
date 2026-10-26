@@ -1,0 +1,74 @@
+---
+title: What Jobs Are Out There?
+lead: Aggregates and indexes publicly available job postings in one place.
+publishedAt: 2024-03-25
+layout: project
+---
+
+<script lang="ts">
+    import { config } from "$lib/config"
+    import ProjectGallery from "$lib/components/ProjectGallery.svelte"
+</script>
+
+Gathers postings from public sources, normalizes them, and fills in extra
+fields like salary, work model, and seniority with deterministic rules.
+
+<ProjectGallery
+	images={[
+		{ src: "/projects/jobboard/desktop.png", alt: "Job Board desktop view", aspect: 1.6 },
+		{ src: "/projects/jobboard/mobile.png", alt: "Job Board mobile view", aspect: 0.4621 },
+	]}
+/>
+
+Salary and pay period are pulled out of the posting text with a set of
+pattern matchers, refined by hand against a large corpus of real postings. A
+match always requires actual digits, so a line like
+"Compensation: Competitive + Incentives" never gets read as a number. When
+a posting names a figure but not a period, the magnitude alone is usually
+enough to tell apart a yearly salary from an hourly rate:
+
+```go
+func inferPeriod(s *Salary) Period {
+	top := 0.0
+	if s.Maximum != nil {
+		top = *s.Maximum
+	} else if s.Minimum != nil {
+		top = *s.Minimum
+	}
+	switch {
+	case top >= 20_000:
+		return PeriodAnnual
+	case top >= 7 && top <= 400:
+		return PeriodHourly
+	case s.Currency == EUR && top >= 1000 && top < 10_000:
+		return PeriodMonthly
+	}
+	return ""
+}
+```
+
+Each source syncs on its own schedule, with boards spaced evenly across the
+run so a slow one never holds up the others — a board that takes longer
+than its slot just delays the next one instead of stalling the whole sync:
+
+```go
+var slot time.Duration
+if len(boards) > 0 {
+	slot = spread / time.Duration(len(boards))
+}
+started := time.Now()
+for i, b := range boards {
+	if !sleep(ctx, time.Until(started.Add(time.Duration(i)*slot))) {
+		return
+	}
+	syncBoard(ctx, st, b, fetch)
+}
+```
+
+With everything in one place, it's also a live read on the market itself —
+a world map of where postings show up, switchable between raw density and
+median salary by location.
+
+![Job Board stats page](/projects/jobboard/stats.png)
+
+[Try it at jobs.zgzg.dev]({config.platformLinks.jobBoard})

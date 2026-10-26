@@ -27,8 +27,8 @@
 	<Prose>
 		<h2>Projects</h2>
 		<p>
-			My thought process on various experiments or solutions written mostly for
-			myself for later reference.
+			Some are tools I built and actually use, others are smaller experiments
+			or solutions written mostly for myself, for later reference.
 		</p>
 		<main class="flex flex-col gap-6 py-4">
 			{#each projects as project, i (project.path)}

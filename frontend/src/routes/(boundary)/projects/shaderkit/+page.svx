@@ -1,0 +1,73 @@
+---
+title: Shaderkit
+lead: WebGPU based shader sandbox.
+publishedAt: 2026-03-04
+layout: project
+---
+
+<script lang="ts">
+    import { config } from "$lib/config"
+    import ProjectGallery from "$lib/components/ProjectGallery.svelte"
+    const editorLink = config.platformLinks.shaderkit+"/create"
+</script>
+
+A shader editor that runs entirely in the browser over WebGPU. Write a
+fragment shader, see it rendered live on a full-screen canvas, and share it
+as a link — no account needed to try one out.
+
+<ProjectGallery
+	images={[
+		{ src: "/projects/shaderkit/desktop.png", alt: "Shaderkit shader gallery desktop view", aspect: 1.6 },
+		{ src: "/projects/shaderkit/mobile.png", alt: "Shaderkit shader gallery mobile view", aspect: 0.4621 },
+	]}
+/>
+
+Every shader gets a small prelude bound automatically at group 0: elapsed
+time, canvas resolution, and pointer position, all as one uniform struct.
+A shader only has to declare `for_each_pixel` and it already has the inputs
+most sandboxes make you wire up by hand:
+
+```wgsl
+struct Prelude {
+  elapsed_sec: f32,
+  resolution: vec2<u32>,
+  pointer: vec2<u32>,
+}
+
+@binding(0) @group(0) var<uniform> prelude: Prelude;
+```
+
+```wgsl
+@fragment
+fn for_each_pixel(@builtin(position) pos: vec4f) -> @location(0) vec4f {
+    var uv = pos.xy / vec2f(prelude.resolution);
+    let color = 0.5 + 0.5 * cos(prelude.elapsed_sec + uv.xyx + vec3(0.0, 2.0, 4.0));
+    return vec4(color, 1.0);
+}
+```
+
+![Shaderkit editor](/projects/shaderkit/editor.png)
+
+Compiling untrusted WGSL from the browser means a broken shader can't be
+allowed to take the renderer down with it. The editor wraps every build in
+an error scope and reads the compilation log back out before swapping the
+pipeline in, so a bad shader just reports why it failed instead of leaving a
+blank canvas:
+
+```ts
+this.device.pushErrorScope("validation");
+const shaderModule = this.device.createShaderModule({
+	label: "user shader",
+	code: wgslCode,
+});
+const compilationInfo = await shaderModule.getCompilationInfo();
+if (compilationInfo.messages.some((m) => m.type === "error")) {
+	throw compilationInfo;
+}
+```
+
+The [editor]({editorLink}) is based on chromium's implementation of WebGPU, and expected to work best with it.
+For other browsers and platforms, such as linux experimental flags or nightly versions might need to be enabled in order to work.
+Here you can find an [up to date status](https://github.com/gpuweb/gpuweb/wiki/Implementation-Status) for each browser and platform.
+
+[Try it at shaderkit.dev]({config.platformLinks.shaderkit})

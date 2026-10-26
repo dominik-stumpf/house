@@ -5,7 +5,7 @@ import { createHighlighter } from "shiki";
 
 const highlighter = await createHighlighter({
 	themes: ["vitesse-black", "vitesse-light"],
-	langs: ["ts", "js"],
+	langs: ["ts", "js", "go", "wgsl"],
 });
 
 /** @type {import('mdsvex').MdsvexOptions} */
