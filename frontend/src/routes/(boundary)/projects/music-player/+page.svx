@@ -3,10 +3,10 @@ title: Music Player
 lead: Local-first music player for your own library, on desktop and mobile.
 publishedAt: 2026-10-12
 layout: project
+liveUrl: https://music.zgzg.dev
 ---
 
 <script lang="ts">
-    import { config } from "$lib/config"
     import ProjectGallery from "$lib/components/ProjectGallery.svelte"
 </script>
 
@@ -78,5 +78,3 @@ export function isConfident<T extends Scorable>(
 	return !rival || best.confidence - rival.confidence >= MARGIN;
 }
 ```
-
-[Try it at music.zgzg.dev]({config.platformLinks.musicPlayer})
