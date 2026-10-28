@@ -13,7 +13,8 @@ liveUrl: https://music.zgzg.dev
 A fast player over music you already own. Point it at a folder and it
 builds your library, mixes, and recommendations entirely from what's there.
 It's built to work the same way on a phone as it does on a desktop: same
-layout, same keyboard-free navigation, same library.
+layout, same keyboard-free navigation, same library, meant to scale to
+thousands of tracks even on mobile.
 
 <ProjectGallery
 	images={[
