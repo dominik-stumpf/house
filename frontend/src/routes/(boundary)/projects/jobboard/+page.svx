@@ -49,7 +49,8 @@ func inferPeriod(s *Salary) Period {
 
 Each source syncs on its own schedule, with boards spaced evenly across the
 run so a slow one never holds up the others — a board that takes longer
-than its slot just delays the next one instead of stalling the whole sync:
+than its slot just delays the next one instead of stalling the whole sync.
+Sync health and board latency for each run are tracked in Grafana:
 
 ```go
 var slot time.Duration
